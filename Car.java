@@ -1,12 +1,16 @@
 import java.awt.*;
 
-public abstract class Car {
-    public int nrDoors; // Number of doors on the car
-    public double enginePower; // Engine power of the car
-    public double currentSpeed; // The current speed of the car
-    public Color color; // Color of the car
-    public String modelName; // The car model name
-    public Car (int nrDoors, double enginePower, Color color, String modelName){
+public abstract class Car implements Movable{
+    protected Point point;
+    protected int direction;
+    protected int nrDoors; // Number of doors on the car
+    protected double enginePower; // Engine power of the car
+    protected double currentSpeed; // The current speed of the car
+    protected Color color; // Color of the car
+    protected String modelName; // The car model name
+    protected Car (int nrDoors, double enginePower, Color color, String modelName){
+        this.direction = 0;
+        this.point = new Point(0,0);
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
@@ -14,50 +18,78 @@ public abstract class Car {
         stopEngine();
     }
 
-    public int getNrDoors(){
+    @Override
+    public void move() {
+        if(this.direction == 0){
+            this.point.setLocation(point.getX()+this.getCurrentSpeed(), point.getY());
+        }
+        if(this.direction == 1){
+            this.point.setLocation(point.getX(), point.getY()+this.getCurrentSpeed());
+        }
+        if(this.direction == 2){
+            this.point.setLocation(point.getX()-this.getCurrentSpeed(), point.getY());
+        }
+        if(this.direction == 3){
+            this.point.setLocation(point.getX(), point.getY()-this.getCurrentSpeed());
+        }
+    }
+    @Override
+    public void turnLeft() {
+        if(this.direction == 0){
+            this.direction = 3;
+        } else {
+            this.direction = (this.direction % 4) - 1;
+        }
+    }
+    @Override
+    public void turnRight() {
+        this.direction = ((this.direction + 1) % 4);
+    }
+
+    protected int getNrDoors(){
         return nrDoors;
     }
-    public double getEnginePower(){
+    protected double getEnginePower(){
         return enginePower;
     }
 
-    public double getCurrentSpeed(){
+    protected double getCurrentSpeed(){
         return currentSpeed;
     }
 
-    public Color getColor(){
+    protected Color getColor(){
         return color;
     }
 
-    public void setColor(Color clr){
+    protected void setColor(Color clr){
         color = clr;
     }
 
-    public void startEngine(){
+    protected void startEngine(){
         currentSpeed = 0.1;
     }
 
-    public void stopEngine(){
+    protected void stopEngine(){
         currentSpeed = 0;
     }
 
-    public double speedFactor(){
+    protected double speedFactor(){
         return 0;
     }
 
-    public void incrementSpeed(double amount){
+    protected void incrementSpeed(double amount){
         currentSpeed = getCurrentSpeed() + speedFactor() * amount;
     }
 
-    public void decrementSpeed(double amount){
+    protected void decrementSpeed(double amount){
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
-    public void gas(double amount){
+    protected void gas(double amount){
         incrementSpeed(amount);
     }
 
-    public void brake(double amount){
+    protected void brake(double amount){
         decrementSpeed(amount);
     }
 
