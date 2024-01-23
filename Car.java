@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.lang.Math;
 
 public abstract class Car implements Movable{
     protected Point point;
@@ -54,6 +55,8 @@ public abstract class Car implements Movable{
     }
 
     protected double getCurrentSpeed(){
+        // ska kalla på gas, break och engine power
+        currentSpeed = Math.clamp((int)currentSpeed, 0, enginePower);
         return currentSpeed;
     }
 
@@ -74,11 +77,11 @@ public abstract class Car implements Movable{
     }
 
     protected double speedFactor(){
-        return 0;
+        return 1;
     }
 
     protected void incrementSpeed(double amount){
-        currentSpeed = getCurrentSpeed() + speedFactor() * amount;
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,0);
     }
 
     protected void decrementSpeed(double amount){
@@ -86,10 +89,19 @@ public abstract class Car implements Movable{
     }
 
     protected void gas(double amount){
+        /*if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Amount must be in the range [0, 1]");
+        }*/
+        amount = Math.clamp(amount, 0, 1);
         incrementSpeed(amount);
     }
 
     protected void brake(double amount){
+        /*if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Amount must be in the range [0, 1]");
+        }*/
+        amount = Math.clamp(amount, 0, 1);
+
         decrementSpeed(amount);
     }
 
