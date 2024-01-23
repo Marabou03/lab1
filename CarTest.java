@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarTest {
-
+    // HELLO!
     private static Car volvo;
     private static Car saab;
     @BeforeAll
