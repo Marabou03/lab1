@@ -11,7 +11,7 @@ public abstract class Car implements Movable{
     protected String modelName; // The car model name
     protected Car (int nrDoors, double enginePower, Color color, String modelName){
         this.direction = 0;
-        this.point = new Point(0,0);
+        this.point = new Point(0, 0);
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
@@ -55,8 +55,8 @@ public abstract class Car implements Movable{
     }
 
     protected double getCurrentSpeed(){
-        // ska kalla på gas, break och engine power
-        currentSpeed = Math.clamp((int)currentSpeed, 0, enginePower);
+        // ska kalla på gas och break ksk
+        currentSpeed = Math.clamp(currentSpeed, 0, enginePower);
         return currentSpeed;
     }
 
@@ -77,11 +77,11 @@ public abstract class Car implements Movable{
     }
 
     protected double speedFactor(){
-        return 1;
+        return 0;
     }
 
     protected void incrementSpeed(double amount){
-        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,0);
+        currentSpeed = Math.max(getCurrentSpeed() + speedFactor() * amount,0);
     }
 
     protected void decrementSpeed(double amount){
@@ -89,19 +89,12 @@ public abstract class Car implements Movable{
     }
 
     protected void gas(double amount){
-        /*if (amount < 0 || amount > 1) {
-            throw new IllegalArgumentException("Amount must be in the range [0, 1]");
-        }*/
         amount = Math.clamp(amount, 0, 1);
         incrementSpeed(amount);
     }
 
     protected void brake(double amount){
-        /*if (amount < 0 || amount > 1) {
-            throw new IllegalArgumentException("Amount must be in the range [0, 1]");
-        }*/
         amount = Math.clamp(amount, 0, 1);
-
         decrementSpeed(amount);
     }
 
