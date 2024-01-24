@@ -1,10 +1,14 @@
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarTest {
     // HELLO!
     private static Car volvo;
@@ -15,13 +19,14 @@ class CarTest {
         saab = new Saab95();
     }
 
-    @Test
+    @Test @Order(1)
     void move() {
-        // NEEDS TO BE FIXED!!!
         volvo.startEngine();
         volvo.move();
         assertEquals(0.1, volvo.point.getX());
+        assertEquals(0, volvo.point.getY());
     }
+
 
     @Test
     void turnLeft() {
@@ -29,7 +34,7 @@ class CarTest {
         assertEquals(3, saab.direction);
     }
 
-    @Test
+    @Test @Order(2)
     void turnRight() {
         volvo.turnRight();
         assertEquals(1, volvo.direction);
