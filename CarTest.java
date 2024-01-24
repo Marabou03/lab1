@@ -23,8 +23,8 @@ class CarTest {
     void move() {
         volvo.startEngine();
         volvo.move();
-        assertEquals(0.1, volvo.point.getX());
-        assertEquals(0, volvo.point.getY());
+        assertEquals(0, volvo.point.getX());
+        assertEquals(0.1, volvo.point.getY());
     }
 
 

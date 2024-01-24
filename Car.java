@@ -22,16 +22,16 @@ public abstract class Car implements Movable{
     @Override
     public void move() {
         if(this.direction == 0){
-            this.point.setLocation(point.getX()+this.getCurrentSpeed(), point.getY());
-        }
-        if(this.direction == 1){
             this.point.setLocation(point.getX(), point.getY()+this.getCurrentSpeed());
         }
+        if(this.direction == 1){
+            this.point.setLocation(point.getX()+this.getCurrentSpeed(), point.getY());
+        }
         if(this.direction == 2){
-            this.point.setLocation(point.getX()-this.getCurrentSpeed(), point.getY());
+            this.point.setLocation(point.getX(), point.getY()-this.getCurrentSpeed());
         }
         if(this.direction == 3){
-            this.point.setLocation(point.getX(), point.getY()-this.getCurrentSpeed());
+            this.point.setLocation(point.getX()-this.getCurrentSpeed(), point.getY());
         }
     }
     @Override
