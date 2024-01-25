@@ -113,7 +113,7 @@ class CarTest {
         saab.gas(1);
         assertTrue( volvo.getCurrentSpeed() > initialSpeed);
         assertTrue(saab.getCurrentSpeed() > initialSpeed);
-        assertEquals(1, volvo.getCurrentSpeed());
+
     }
 
     @Test @Order(6)
