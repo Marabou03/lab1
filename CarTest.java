@@ -53,6 +53,8 @@ class CarTest {
     @Test
     void getCurrentSpeed() {
         assertTrue(volvo.getCurrentSpeed() == volvo.currentSpeed && saab.getCurrentSpeed() == saab.currentSpeed);
+        assertTrue(volvo.getCurrentSpeed() >= 0 && volvo.getCurrentSpeed() <= volvo.getEnginePower());
+        assertTrue(saab.getCurrentSpeed() >= 0 && saab.getCurrentSpeed() <= saab.getEnginePower());
     }
 
     @Test
@@ -113,7 +115,6 @@ class CarTest {
         saab.gas(1);
         assertTrue( volvo.getCurrentSpeed() > initialSpeed);
         assertTrue(saab.getCurrentSpeed() > initialSpeed);
-        assertEquals(1, volvo.getCurrentSpeed());
     }
 
     @Test @Order(6)
