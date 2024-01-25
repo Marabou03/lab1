@@ -55,6 +55,7 @@ public abstract class Car implements Movable{
     }
 
     protected double getCurrentSpeed(){
+        // ska kalla på gas och break ksk
         currentSpeed = Math.clamp(currentSpeed, 0, enginePower);
         return currentSpeed;
     }
@@ -96,4 +97,5 @@ public abstract class Car implements Movable{
         amount = Math.clamp(amount, 0, 1);
         decrementSpeed(amount);
     }
+
 }

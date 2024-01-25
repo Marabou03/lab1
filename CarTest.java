@@ -55,6 +55,7 @@ class CarTest {
         assertTrue(volvo.getCurrentSpeed() == volvo.currentSpeed && saab.getCurrentSpeed() == saab.currentSpeed);
         assertTrue(volvo.getCurrentSpeed() >= 0 && volvo.getCurrentSpeed() <= volvo.getEnginePower());
         assertTrue(saab.getCurrentSpeed() >= 0 && saab.getCurrentSpeed() <= saab.getEnginePower());
+
     }
 
     @Test
@@ -108,6 +109,10 @@ class CarTest {
         assertTrue(saab.getCurrentSpeed() < 10);
     }
 
+    /*
+    Gas method in the car class uses clamp 1 to 0,
+     which makes it impossible to go above 1 or below 0.
+    */
     @Test @Order(5)
     void gas() {
         double initialSpeed = 0.1;
@@ -115,8 +120,17 @@ class CarTest {
         saab.gas(1);
         assertTrue( volvo.getCurrentSpeed() > initialSpeed);
         assertTrue(saab.getCurrentSpeed() > initialSpeed);
+
+        volvo.brake(1);
+        volvo.gas(100);
+        volvo.gas(-100);
+        assertEquals(1.35, volvo.getCurrentSpeed(), 0.001);
     }
 
+    /*
+    Brake method in the car class uses clamp 1 to 0,
+    which makes it impossible to go above 1 or below 0.
+   */
     @Test @Order(6)
     void brake() {
         double initialSpeed = 1;
@@ -124,6 +138,11 @@ class CarTest {
         saab.brake(1);
         assertTrue(volvo.getCurrentSpeed() < initialSpeed);
         assertTrue(saab.getCurrentSpeed() < initialSpeed);
+
+        volvo.gas(1);
+        volvo.brake(100);
+        volvo.brake(-100);
+        assertEquals(0.1, volvo.getCurrentSpeed(), 0.001);
 
     }
 }
