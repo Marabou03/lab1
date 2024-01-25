@@ -90,8 +90,6 @@ class CarTest {
         volvo.incrementSpeed(10);
         saab.startEngine();
         saab.incrementSpeed(10);
-        int initialSpeed = 0;
-        int amount = 10;
         assertTrue(volvo.getCurrentSpeed() > 10);
         assertTrue(saab.getCurrentSpeed() > 10);
     }
@@ -100,8 +98,6 @@ class CarTest {
     void decrementSpeed() {
         volvo.decrementSpeed(10);
         saab.decrementSpeed(10);
-        int initialSpeed = 20;
-        int amount = 10;
         assertTrue(volvo.getCurrentSpeed() < 10);
         assertTrue(saab.getCurrentSpeed() < 10);
     }
