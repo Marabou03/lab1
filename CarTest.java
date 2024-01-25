@@ -84,36 +84,45 @@ class CarTest {
         assertTrue(volvo.speedFactor() == 1.25 && (saab.speedFactor() == 1.25 || saab.speedFactor() == 1.625));
     }
 
-    @Test
+    @Test @Order(3)
     void incrementSpeed() {
+        volvo.startEngine();
+        volvo.incrementSpeed(10);
+        saab.startEngine();
+        saab.incrementSpeed(10);
         int initialSpeed = 0;
         int amount = 10;
-        assertEquals(12.5, initialSpeed + volvo.speedFactor() * amount);
-        assertTrue(initialSpeed + saab.speedFactor() * amount == 12.5 || initialSpeed + saab.speedFactor() * amount == 16.25);
+        assertTrue(volvo.getCurrentSpeed() > 10);
+        assertTrue(saab.getCurrentSpeed() > 10);
     }
 
-    @Test
+    @Test @Order(4)
     void decrementSpeed() {
+        volvo.decrementSpeed(10);
+        saab.decrementSpeed(10);
         int initialSpeed = 20;
         int amount = 10;
-        assertEquals(7.5, initialSpeed - volvo.speedFactor() * amount);
-        assertTrue(initialSpeed - saab.speedFactor() * amount == 7.5 || initialSpeed - saab.speedFactor() * amount == 3.75);
+        assertTrue(volvo.getCurrentSpeed() < 10);
+        assertTrue(saab.getCurrentSpeed() < 10);
     }
 
-    @Test
+    @Test @Order(5)
     void gas() {
-        double initialSpeed = 10;
-        double amount = 0.5;
-        assertTrue(initialSpeed + volvo.speedFactor() * amount > initialSpeed);
-        assertTrue(initialSpeed + saab.speedFactor() * amount > initialSpeed || initialSpeed + saab.speedFactor() * amount > initialSpeed);
+        double initialSpeed = 0.1;
+        volvo.gas(1);
+        saab.gas(1);
+        assertTrue( volvo.getCurrentSpeed() > initialSpeed);
+        assertTrue(saab.getCurrentSpeed() > initialSpeed);
+        assertEquals(1, volvo.getCurrentSpeed());
     }
 
-    @Test
+    @Test @Order(6)
     void brake() {
-        double initialSpeed = 10;
-        double amount = 0.5;
-        assertTrue(initialSpeed - volvo.speedFactor() * amount < initialSpeed);
-        assertTrue(initialSpeed - saab.speedFactor() * amount < initialSpeed || initialSpeed - saab.speedFactor() * amount < initialSpeed);
+        double initialSpeed = 1;
+        volvo.brake(1);
+        saab.brake(1);
+        assertTrue(volvo.getCurrentSpeed() < initialSpeed);
+        assertTrue(saab.getCurrentSpeed() < initialSpeed);
 
     }
 }

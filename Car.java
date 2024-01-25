@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Color;
 import java.lang.Math;
 
 public abstract class Car implements Movable{
