@@ -25,19 +25,38 @@ class CarTest {
         volvo.move();
         assertEquals(0, volvo.point.getX());
         assertEquals(0.1, volvo.point.getY());
+        volvo.turnLeft();
+        volvo.move();
+        assertEquals((-0.1), volvo.point.getX());
+        volvo.turnLeft();
+        volvo.move();
+        assertEquals(0, volvo.point.getY());
+        volvo.turnLeft();
+        volvo.move();
+        assertEquals(0, volvo.point.getX());
+        volvo.turnLeft();
+
     }
 
 
-    @Test
+    @Test@Order(3)
     void turnLeft() {
+        volvo.turnLeft();
+        assertEquals(Car.Direction.NORTH, volvo.direction);
+        volvo.turnLeft();
+        assertEquals(Car.Direction.WEST, volvo.direction);
+        volvo.turnLeft();
+        assertEquals(Car.Direction.SOUTH, volvo.direction);
+        volvo.turnLeft();
+        assertEquals(Car.Direction.EAST, volvo.direction);
         saab.turnLeft();
-        assertEquals(3, saab.direction);
+        assertEquals(Car.Direction.WEST, saab.direction);
     }
 
     @Test @Order(2)
     void turnRight() {
         volvo.turnRight();
-        assertEquals(1, volvo.direction);
+        assertEquals(Car.Direction.EAST, volvo.direction);
     }
 
     @Test
@@ -87,7 +106,7 @@ class CarTest {
         assertTrue(volvo.speedFactor() == 1.25 && (saab.speedFactor() == 1.25 || saab.speedFactor() == 1.625));
     }
 
-    @Test @Order(3)
+    @Test @Order(4)
     void incrementSpeed() {
         volvo.startEngine();
         volvo.incrementSpeed(10);
@@ -99,7 +118,7 @@ class CarTest {
         assertTrue(saab.getCurrentSpeed() > 10);
     }
 
-    @Test @Order(4)
+    @Test @Order(5)
     void decrementSpeed() {
         volvo.decrementSpeed(10);
         saab.decrementSpeed(10);
@@ -113,7 +132,7 @@ class CarTest {
     Gas method in the car class uses clamp 1 to 0,
      which makes it impossible to go above 1 or below 0.
     */
-    @Test @Order(5)
+    @Test @Order(6)
     void gas() {
         double initialSpeed = 0.1;
         volvo.gas(1);
@@ -131,7 +150,7 @@ class CarTest {
     Brake method in the car class uses clamp 1 to 0,
     which makes it impossible to go above 1 or below 0.
    */
-    @Test @Order(6)
+    @Test @Order(7)
     void brake() {
         double initialSpeed = 1;
         volvo.brake(1);

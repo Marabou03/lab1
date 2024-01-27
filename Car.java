@@ -3,14 +3,14 @@ import java.lang.Math;
 
 public abstract class Car implements Movable{
     protected Point point;
-    protected int direction;
+    protected Direction direction;
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
     protected Car (int nrDoors, double enginePower, Color color, String modelName){
-        this.direction = 0;
+        this.direction = Direction.NORTH;
         this.point = new Point(0, 0);
         this.nrDoors = nrDoors;
         this.color = color;
@@ -19,32 +19,40 @@ public abstract class Car implements Movable{
         stopEngine();
     }
 
+    public enum Direction {
+        NORTH, EAST, SOUTH, WEST
+    }
+
     @Override
     public void move() {
-        if(this.direction == 0){
-            this.point.setLocation(point.getX(), point.getY()+this.getCurrentSpeed());
-        }
-        if(this.direction == 1){
-            this.point.setLocation(point.getX()+this.getCurrentSpeed(), point.getY());
-        }
-        if(this.direction == 2){
-            this.point.setLocation(point.getX(), point.getY()-this.getCurrentSpeed());
-        }
-        if(this.direction == 3){
-            this.point.setLocation(point.getX()-this.getCurrentSpeed(), point.getY());
+        switch (direction) {
+            case NORTH:
+                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
+                break;
+            case EAST:
+                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
+                break;
+            case SOUTH:
+                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
+                break;
+            case WEST:
+                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
+                break;
         }
     }
+
     @Override
     public void turnLeft() {
-        if(this.direction == 0){
-            this.direction = 3;
-        } else {
-            this.direction = (this.direction % 4) - 1;
+        if (this.direction == Direction.NORTH){
+            this.direction = Direction.WEST;
+        } else{
+            int i = (this.direction.ordinal() - 1 + 4) % 4;
+            this.direction = Direction.values()[i];
         }
     }
     @Override
     public void turnRight() {
-        this.direction = ((this.direction + 1) % 4);
+        direction = Direction.values()[(direction.ordinal() + 1) % 4];
     }
 
     protected int getNrDoors(){
@@ -55,7 +63,6 @@ public abstract class Car implements Movable{
     }
 
     protected double getCurrentSpeed(){
-        // ska kalla på gas och break ksk
         currentSpeed = Math.clamp(currentSpeed, 0, enginePower);
         return currentSpeed;
     }
