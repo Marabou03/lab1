@@ -12,10 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class CarTest {
     private static Car volvo;
     private static Car saab;
+    private static Car scania;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
         saab = new Saab95();
+        scania = new Scania();
     }
 
     @Test @Order(1)
