@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarTest {
-    // HELLO!
+    // hi
     private static Car volvo;
     private static Car saab;
     @BeforeAll
@@ -103,8 +103,6 @@ class CarTest {
     void decrementSpeed() {
         volvo.decrementSpeed(10);
         saab.decrementSpeed(10);
-        int initialSpeed = 20;
-        int amount = 10;
         assertTrue(volvo.getCurrentSpeed() < 10);
         assertTrue(saab.getCurrentSpeed() < 10);
     }
@@ -138,6 +136,7 @@ class CarTest {
         saab.brake(1);
         assertTrue(volvo.getCurrentSpeed() < initialSpeed);
         assertTrue(saab.getCurrentSpeed() < initialSpeed);
+        assertTrue(volvo.getCurrentSpeed() < initialSpeed);
 
         volvo.gas(1);
         volvo.brake(100);
