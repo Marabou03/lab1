@@ -20,8 +20,8 @@ public class Scania extends Car{
     }
     public void raiseFlak(double raise) {
         if (getCurrentSpeed() == 0) {
-            raise += flakAngle;
-            flakAngle = Math.clamp(raise, 0 , 70);
+            double raisetmp = flakAngle + raise;
+            flakAngle = Math.clamp(raisetmp, 0 , 70);
         }else {
             flakAngle = 0;
         }
@@ -29,8 +29,8 @@ public class Scania extends Car{
 
     public void lowerFlak(double lower ) {
         if (getCurrentSpeed() == 0) {
-            lower -= flakAngle;
-            flakAngle = Math.clamp(lower, 0 , 70);
+            double lowertmp = flakAngle - lower;
+            flakAngle = Math.clamp(lowertmp, 0 , 70);
         }else {
             flakAngle = 0;
         }

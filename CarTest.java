@@ -8,11 +8,12 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarTest {
     private static Car volvo;
     private static Car saab;
-    private static Car scania;
+    private static Scania scania;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
@@ -162,6 +163,46 @@ class CarTest {
         volvo.brake(100);
         volvo.brake(-100);
         assertEquals(0.1, volvo.getCurrentSpeed(), 0.001);
+    }
 
+    @Test @Order(8)
+    void raiseFlak(){
+        scania.raiseFlak(2);
+        assertEquals(2, scania.getFlakAngle());
+    }
+    @Test @Order(10)
+    void lowerFlak(){
+        scania.lowerFlak(2);
+        assertEquals(0, scania.getFlakAngle());
+        scania.lowerFlak(2);
+        assertEquals(0, scania.getFlakAngle());
+        scania.lowerFlak(71);
+        assertEquals(0, scania.getFlakAngle());
+    }
+
+    @Test @Order(9)
+    void startEngineScania(){
+    scania.startEngine();
+    assertEquals(0.0, scania.getCurrentSpeed());
+
+    }
+
+    @Test @Order(11)
+    void startEngineScania2(){
+    scania.startEngine();
+    assertEquals(0.1, scania.getCurrentSpeed());
+
+    }
+
+    @Test @Order(12)
+    void getFlakAngle(){
+    assertEquals(0, scania.getFlakAngle());
+    scania.raiseFlak(2);
+    assertEquals(0, scania.getFlakAngle());
+    scania.lowerFlak(2);
+    assertEquals(0, scania.getFlakAngle());
+    scania.stopEngine();
+    scania.raiseFlak(2);
+    assertEquals(2, scania.getFlakAngle());
     }
 }
