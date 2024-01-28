@@ -9,6 +9,7 @@ public abstract class Car implements Movable{
     protected double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
+
     protected Car (int nrDoors, double enginePower, Color color, String modelName){
         this.direction = Direction.NORTH;
         this.point = new Point(0, 0);
@@ -58,6 +59,7 @@ public abstract class Car implements Movable{
     protected int getNrDoors(){
         return nrDoors;
     }
+
     protected double getEnginePower(){
         return enginePower;
     }
@@ -104,5 +106,4 @@ public abstract class Car implements Movable{
         amount = Math.clamp(amount, 0, 1);
         decrementSpeed(amount);
     }
-
 }
