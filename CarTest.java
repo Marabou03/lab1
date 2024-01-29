@@ -14,11 +14,13 @@ class CarTest {
     private static Car volvo;
     private static Car saab;
     private static Scania scania;
+    private static Truck truck;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
         saab = new Saab95();
         scania = new Scania();
+        truck = new VolvoTruck();
     }
 
     @Test @Order(1)
