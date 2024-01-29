@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ public abstract class Truck extends Car {
     public Truck(int nrDoors, double enginePower, Color color, String modelName, int maxCars) {
         super(nrDoors, enginePower, color, modelName);
         this.maxCars = maxCars;
-        this.loadedCars = new ArrayList<>();
+        this.loadedCars = new ArrayList<>(maxCars);
         this.rampUp = true;
     }
 
@@ -24,19 +24,28 @@ public abstract class Truck extends Car {
         rampUp = true;
     }
 
-    public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck
-        if(!rampUp){
-
+    public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
+        if(!rampUp && (loadedCars.size() < maxCars)){
+            loadedCars.add(car);
+            car.setLocation(getX, getY);
         }
     }
 
     public void unloadCar() {
-        if(!rampUp){
+        if(!rampUp && (loadedCars.size() > maxCars)){
+            int i = loadedCars.size() - 1;
 
         }
     }
 
     public List<Car> getLoadedCars() {
         return new ArrayList<>(loadedCars);
+    }
+
+    @Override
+    protected void startEngine() {
+        if (rampUp == true) {
+            super.startEngine();
+        }
     }
 }
