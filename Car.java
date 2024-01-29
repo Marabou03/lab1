@@ -19,7 +19,9 @@ public abstract class Car implements Movable{
         this.modelName = modelName;
         stopEngine();
     }
-
+    public Point getPoint() {
+        return point;
+    }
     public enum Direction {
         NORTH, EAST, SOUTH, WEST
     }

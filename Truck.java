@@ -27,14 +27,18 @@ public abstract class Truck extends Car {
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
         if(!rampUp && (loadedCars.size() < maxCars)){
             loadedCars.add(car);
-            car.setLocation(getX, getY);
+            car.getPoint().setLocation(getPoint().getX(), getPoint().getY()); // does it set the cordenates of the truck?
+
+
         }
     }
 
     public void unloadCar() {
         if(!rampUp && (loadedCars.size() > maxCars)){
             int i = loadedCars.size() - 1;
-
+            Car lastCar = loadedCars.get(i);
+            loadedCars.remove(i);
+            lastCar.point.setLocation(point.getX() + 1,point.getY() + 1); // does it set the cordenates of the car to be next the truck?
         }
     }
 

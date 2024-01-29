@@ -207,4 +207,10 @@ class CarTest {
     scania.raiseFlak(2);
     assertEquals(2, scania.getFlakAngle());
     }
+
+    @Test @Order(12)
+    void loadCar(){
+
+    }
+
 }
