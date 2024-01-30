@@ -32,7 +32,7 @@ public abstract class Truck extends Car {
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
         if(!rampUp && (loadedCars.size() < maxCars)){
             Point carPos = car.getPoint();
-            Point truckPos = this.getPoint(); // needs to be fixed
+            Point truckPos = this.getPoint();
             double posX = Math.pow(carPos.getX()-truckPos.getX(), 2);
             double posY = Math.pow(carPos.getY()-truckPos.getY(), 2);
             double distance = Math.sqrt(posX+posY);
@@ -47,13 +47,23 @@ public abstract class Truck extends Car {
         }
     }
 
-    public void unloadCar() {
+    public void unloadCar() { // ärva bilens värden
         if(!rampUp && !loadedCars.isEmpty()){
-
             Car lastCar = loadedCars.getLast();
-            lastCar.point.setLocation(this.getPoint().getX() + 10, this.getPoint().getY() + 10);
-            loadedCars.removeLast();
 
+            System.out.println(this.point.getX());
+            System.out.println(lastCar.point.getX());
+
+            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());
+            carPoint.setLocation(point.getX() + 5,point.getY() + 5);
+            //carPoint.setX(carPoint.getX() + 5);
+            //carPoint.setY(carPoint.getY() + 5);
+            lastCar.point = carPoint;
+
+
+            System.out.println(this.point.getX());
+            System.out.println(lastCar.point.getX());
+            loadedCars.removeLast();
         }else{
             throw new IllegalArgumentException("Truck is empty or the ramp is up");
         }
@@ -65,12 +75,13 @@ public abstract class Truck extends Car {
 
     @Override
     protected void startEngine() {
-        if (rampUp == true) {
+        if (rampUp) {
             super.startEngine();
         }
     }
     @Override
     public void move() {
+        //super.move();
         switch (direction) {
             case NORTH:
                 point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());

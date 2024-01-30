@@ -226,7 +226,7 @@ class CarTest {
         truck.loadCar(volvo2);
         assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
-
+        truck.raiseRamp();
     }
     @Test @Order(14)
     void getLoadedCars(){
@@ -235,9 +235,10 @@ class CarTest {
     void unload(){
         truck.lowerRamp();
         truck.unloadCar();
-        assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
-        assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
-        //assertEquals(10, truck.getPoint().getY());
+        assertEquals(5, volvo2.getPoint().getX());
+        assertEquals(5, volvo2.getPoint().getY());
+        assertEquals(0, truck.getPoint().getX());
+        assertEquals(0, truck.getPoint().getY());
 
     }
 }
