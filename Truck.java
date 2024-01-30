@@ -14,6 +14,10 @@ public abstract class Truck extends Car {
         this.loadedCars = new ArrayList<>(maxCars);
         this.rampUp = true;
     }
+    public boolean getRampUp(){
+        return rampUp;
+
+    }
 
     public void lowerRamp() {
         if (currentSpeed == 0) {
@@ -28,7 +32,7 @@ public abstract class Truck extends Car {
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
         if(!rampUp && (loadedCars.size() < maxCars)){
             Point carPos = car.getPoint();
-            Point truckPos = Truck.getPoint(); // not working properly
+            Point truckPos = Truck.getPoint(); // needs to be fixed
             double posX = Math.pow(carPos.getX()-truckPos.getX(), 2);
             double posY = Math.pow(carPos.getY()-truckPos.getY(), 2);
             double distance = Math.sqrt(posX+posY);

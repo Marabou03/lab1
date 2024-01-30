@@ -209,6 +209,21 @@ class CarTest {
     }
 
     @Test @Order(12)
+    void rampUpDown(){
+        truck.stopEngine();
+        assertEquals(0, truck.getCurrentSpeed());
+        truck.lowerRamp();
+        assertEquals(false, truck.getRampUp());
+        truck.raiseRamp();
+        assertEquals(true, truck.getRampUp());
+
+    }
+
+    @Test @Order(13)
+    void l(){
+
+    }
+    @Test @Order(14)
     void loadCar(){
 
     }
