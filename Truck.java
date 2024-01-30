@@ -38,7 +38,6 @@ public abstract class Truck extends Car {
             double distance = Math.sqrt(posX+posY);
             if (distance < 5){
                 loadedCars.add(car);
-                //car.getPoint().setLocation(this.getPoint().getX(), this.getPoint().getY()); // does it set the cordenates of the truck?
                 car.point = this.getPoint();
             } else{
                 throw new IllegalArgumentException("Car is too far away");
@@ -50,14 +49,14 @@ public abstract class Truck extends Car {
 
     public void unloadCar() {
         if(!rampUp && !loadedCars.isEmpty()){
-            int i = loadedCars.size() - 1;
-            Car lastCar = loadedCars.get(i);
-            loadedCars.remove(i);
-            lastCar.point.setLocation(point.getX() + 1,point.getY() + 1); // does it set the cordenates of the car to be next the truck?
+
+            Car lastCar = loadedCars.getLast();
+            lastCar.point.setLocation(this.getPoint().getX() + 10, this.getPoint().getY() + 10);
+            loadedCars.removeLast();
+
         }else{
             throw new IllegalArgumentException("Truck is empty or the ramp is up");
         }
-
     }
 
     public List<Car> getLoadedCars() {
@@ -68,6 +67,28 @@ public abstract class Truck extends Car {
     protected void startEngine() {
         if (rampUp == true) {
             super.startEngine();
+        }
+    }
+    @Override
+    public void move() {
+        switch (direction) {
+            case NORTH:
+                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
+                break;
+            case EAST:
+                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
+                break;
+            case SOUTH:
+                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
+                break;
+            case WEST:
+                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
+                break;
+        }
+        if(!loadedCars.isEmpty()){
+            for (Car car : loadedCars){
+                car.point = this.getPoint();
+            }
         }
     }
 }
