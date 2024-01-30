@@ -12,12 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CarTest {
     private static Car volvo;
+    private static Car volvo2;
     private static Car saab;
     private static Scania scania;
     private static Truck truck;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
+        volvo2  = new Volvo240();
         saab = new Saab95();
         scania = new Scania();
         truck = new VolvoTruck();
@@ -225,7 +227,20 @@ class CarTest {
     }
     @Test @Order(14)
     void loadCar(){
+        truck.lowerRamp();
+        volvo2.point.setLocation(2,2);
+        truck.loadCar(volvo2);
+        assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
+        assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
 
     }
+    @Test @Order(15)
+    void unload(){
+        truck.lowerRamp();
+        volvo2.point.setLocation(2,2);
+        truck.loadCar(volvo2);
+        assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
+        assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
 
+    }
 }
