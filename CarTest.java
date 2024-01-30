@@ -225,7 +225,7 @@ class CarTest {
     }
     @Test @Order(14)
     void loadCar(){
-
+        truck.loadCar(volvo);
     }
 
 }

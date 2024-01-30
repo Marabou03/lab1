@@ -32,13 +32,14 @@ public abstract class Truck extends Car {
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
         if(!rampUp && (loadedCars.size() < maxCars)){
             Point carPos = car.getPoint();
-            Point truckPos = Truck.getPoint(); // needs to be fixed
+            Point truckPos = this.getPoint(); // needs to be fixed
             double posX = Math.pow(carPos.getX()-truckPos.getX(), 2);
             double posY = Math.pow(carPos.getY()-truckPos.getY(), 2);
             double distance = Math.sqrt(posX+posY);
             if (distance < 5){
                 loadedCars.add(car);
-                car.getPoint().setLocation(getPoint().getX(), getPoint().getY()); // does it set the cordenates of the truck?
+                //car.getPoint().setLocation(getPoint().getX(), getPoint().getY()); // does it set the cordenates of the truck?
+                car.point = this.getPoint();
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
@@ -67,6 +68,29 @@ public abstract class Truck extends Car {
     protected void startEngine() {
         if (rampUp == true) {
             super.startEngine();
+        }
+    }
+
+    @Override
+    public void move() {
+        switch (direction) {
+            case NORTH:
+                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
+                break;
+            case EAST:
+                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
+                break;
+            case SOUTH:
+                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
+                break;
+            case WEST:
+                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
+                break;
+        }
+        if(!loadedCars.isEmpty()){
+            for (Car car : loadedCars){
+                car.point = this.getPoint();
+            }
         }
     }
 }
