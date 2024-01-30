@@ -16,6 +16,7 @@ class CarTest {
     private static Car saab;
     private static Scania scania;
     private static Truck truck;
+    private static Truck truck2;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
@@ -23,6 +24,7 @@ class CarTest {
         saab = new Saab95();
         scania = new Scania();
         truck = new VolvoTruck();
+        truck2 = new VolvoTruck();
     }
 
     @Test @Order(1)
@@ -169,6 +171,7 @@ class CarTest {
 
     @Test @Order(8)
     void raiseFlak(){
+        scania.stopEngine();
         scania.raiseFlak(2);
         assertEquals(2, scania.getFlakAngle());
     }
@@ -186,7 +189,6 @@ class CarTest {
     void startEngineScania(){
     scania.startEngine();
     assertEquals(0.0, scania.getCurrentSpeed());
-
     }
 
     @Test @Order(11)
@@ -226,11 +228,12 @@ class CarTest {
         truck.loadCar(volvo2);
         assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
-        truck.raiseRamp();
+        assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
     }
-    @Test @Order(14)
-    void getLoadedCars(){
-    }
+    /*@Test @Order(14)
+    void loadTruckWithTruck(){
+        truck.loadCar(truck2);
+    }*/
     @Test @Order(15)
     void unload(){
         truck.lowerRamp();
@@ -239,6 +242,23 @@ class CarTest {
         assertEquals(5, volvo2.getPoint().getY());
         assertEquals(0, truck.getPoint().getX());
         assertEquals(0, truck.getPoint().getY());
-
+    }
+    @Test @Order(16)
+    void MoveTruck(){
+    truck.raiseRamp();
+    truck.startEngine();
+    truck.move();
+    assertEquals(0.1, truck.point.getY());
+    assertEquals(0, truck.point.getX());
+    truck.stopEngine();
+    truck.lowerRamp();
+    truck.loadCar(volvo);
+    truck.raiseRamp();
+    truck.startEngine();
+    truck.move();
+        assertEquals(0.2, truck.point.getY());
+        assertEquals(0, truck.point.getX());
+        assertEquals(0.2, volvo.point.getY());
+        assertEquals(0, volvo.point.getX());
     }
 }

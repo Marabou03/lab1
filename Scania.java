@@ -11,13 +11,6 @@ public class Scania extends Car{
     public double getFlakAngle() {
         return flakAngle;
     }
-    public void changeFlakAngle(double changeAngle) {
-        if (getCurrentSpeed() == 0) {
-            flakAngle = Math.clamp(changeAngle, 0 , 70);
-        }else {
-            flakAngle = 0;
-        }
-    }
     public void raiseFlak(double raise) {
         if (getCurrentSpeed() == 0) {
             double raisetmp = flakAngle + raise;

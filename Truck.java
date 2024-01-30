@@ -30,7 +30,7 @@ public abstract class Truck extends Car {
     }
 
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
-        if(!rampUp && (loadedCars.size() < maxCars)){
+        if(!rampUp && (loadedCars.size() < maxCars) && (car != this)){
             Point carPos = car.getPoint();
             Point truckPos = this.getPoint();
             double posX = Math.pow(carPos.getX()-truckPos.getX(), 2);
@@ -47,22 +47,12 @@ public abstract class Truck extends Car {
         }
     }
 
-    public void unloadCar() { // ärva bilens värden
-        if(!rampUp && !loadedCars.isEmpty()){
+    public void unloadCar() {
+        if(!rampUp && !loadedCars.isEmpty() ){
             Car lastCar = loadedCars.getLast();
-
-            System.out.println(this.point.getX());
-            System.out.println(lastCar.point.getX());
-
-            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());
+            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());// new Point
             carPoint.setLocation(point.getX() + 5,point.getY() + 5);
-            //carPoint.setX(carPoint.getX() + 5);
-            //carPoint.setY(carPoint.getY() + 5);
             lastCar.point = carPoint;
-
-
-            System.out.println(this.point.getX());
-            System.out.println(lastCar.point.getX());
             loadedCars.removeLast();
         }else{
             throw new IllegalArgumentException("Truck is empty or the ramp is up");
@@ -81,21 +71,7 @@ public abstract class Truck extends Car {
     }
     @Override
     public void move() {
-        //super.move();
-        switch (direction) {
-            case NORTH:
-                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
-                break;
-            case EAST:
-                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
-                break;
-            case SOUTH:
-                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
-                break;
-            case WEST:
-                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
-                break;
-        }
+        super.move();
         if(!loadedCars.isEmpty()){
             for (Car car : loadedCars){
                 car.point = this.getPoint();
