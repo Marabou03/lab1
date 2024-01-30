@@ -118,8 +118,6 @@ class CarTest {
         volvo.incrementSpeed(10);
         saab.startEngine();
         saab.incrementSpeed(10);
-        int initialSpeed = 0;
-        int amount = 10;
         assertTrue(volvo.getCurrentSpeed() > 10);
         assertTrue(saab.getCurrentSpeed() > 10);
     }
@@ -215,9 +213,9 @@ class CarTest {
         truck.stopEngine();
         assertEquals(0, truck.getCurrentSpeed());
         truck.lowerRamp();
-        assertEquals(false, truck.getRampUp());
+        assertFalse(truck.getRampUp());
         truck.raiseRamp();
-        assertEquals(true, truck.getRampUp());
+        assertTrue(truck.getRampUp());
 
     }
 
