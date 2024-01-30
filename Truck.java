@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math.*;
+import java.lang.Math;
 
 
 public abstract class Truck extends Car {
@@ -38,13 +38,13 @@ public abstract class Truck extends Car {
             double distance = Math.sqrt(posX+posY);
             if (distance < 5){
                 loadedCars.add(car);
-                //car.getPoint().setLocation(getPoint().getX(), getPoint().getY()); // does it set the cordenates of the truck?
+                //car.getPoint().setLocation(this.getPoint().getX(), this.getPoint().getY()); // does it set the cordenates of the truck?
                 car.point = this.getPoint();
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
         }else {
-            throw new IllegalArgumentException("Either the truck is full or the ramp is pp");
+            throw new IllegalArgumentException("Either the truck is full or the ramp is up");
         }
     }
 
@@ -68,29 +68,6 @@ public abstract class Truck extends Car {
     protected void startEngine() {
         if (rampUp == true) {
             super.startEngine();
-        }
-    }
-
-    @Override
-    public void move() {
-        switch (direction) {
-            case NORTH:
-                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
-                break;
-            case EAST:
-                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
-                break;
-            case SOUTH:
-                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
-                break;
-            case WEST:
-                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
-                break;
-        }
-        if(!loadedCars.isEmpty()){
-            for (Car car : loadedCars){
-                car.point = this.getPoint();
-            }
         }
     }
 }
