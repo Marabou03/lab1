@@ -14,17 +14,21 @@ class CarTest {
     private static Car volvo;
     private static Car volvo2;
     private static Car saab;
+    private static Car saab2;
     private static Scania scania;
     private static Truck truck;
     private static Truck truck2;
+    private static Workshop volvoWorkshop;
     @BeforeAll
     public static void init() {
         volvo  = new Volvo240();
         volvo2  = new Volvo240();
         saab = new Saab95();
+        saab2 = new Saab95();
         scania = new Scania();
         truck = new VolvoTruck();
         truck2 = new VolvoTruck();
+        volvoWorkshop = new VolvoWorkshop();
     }
 
     @Test @Order(1)
@@ -270,5 +274,23 @@ class CarTest {
     @Test @Order(16)
     void testing(){
             //VolvoWorkshop.point.setLocation(2,2);
+    }
+    @Test @Order(17)
+    void typeCarAllowed(){
+        volvo2.point.setLocation(7, 7);
+        volvoWorkshop.typeCarAllowed(volvo2);
+        assertEquals(volvoWorkshop.getPoint().getX(), volvo2.getPoint().getX());
+        assertEquals(volvoWorkshop.getPoint().getY(), volvo2.getPoint().getY());
+        saab2.point.setLocation(6, 6);
+        volvoWorkshop.typeCarAllowed(saab2);
+        assertEquals(1, volvoWorkshop.currentCars.size());
+    }
+    @Test @Order(18)
+    void theCarYouGet(){
+        volvoWorkshop.theCarYouGet();
+        assertEquals(10, volvo2.getPoint().getX());
+        assertEquals(10, volvo2.getPoint().getY());
+        assertEquals(5, volvoWorkshop.getPoint().getX());
+        assertEquals(5, volvoWorkshop.getPoint().getY());
     }
 }

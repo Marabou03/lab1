@@ -11,6 +11,10 @@ public class Workshop <T extends Car> {
     private int x,y;
     private Point point;
 
+    public Point getPoint() {
+        return point;
+    }
+
 
     protected Workshop (int maxCars, String workShopName, Class<T> carType) {
         this.truck = new Truck(2, 20, Color.cyan, "scandic", 2);
@@ -23,7 +27,7 @@ public class Workshop <T extends Car> {
 
 
     public void typeCarAllowed(T car){
-        if (car.getClass().equals(carType.getClass())){
+        if (carType.isInstance(car)){
             double distance = Truck.calculateDistance(car.point, this.point);
             if (distance < 5){
                 currentCars.add(car);
@@ -46,7 +50,4 @@ public class Workshop <T extends Car> {
         }
     }
 
-
-
-    }
 }
