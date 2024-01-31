@@ -4,7 +4,7 @@ import java.util.List;
 import java.lang.Math;
 
 
-public abstract class Truck extends Car {
+public  class Truck extends Car {
     private final int maxCars; //Max amount of cars possible to carry.
     private final List<Car> loadedCars; // the amount of cars being carried.
     private boolean rampUp; // Initial state is ramp up/closed.
@@ -29,13 +29,14 @@ public abstract class Truck extends Car {
         rampUp = true;
     }
 
+    public static double calculateDistance(Point point1, Point point2) {
+        double posX = Math.pow(point1.getX() - point2.getX(), 2);
+        double posY = Math.pow(point1.getY() - point2.getY(), 2);
+        return Math.sqrt(posX + posY);
+    }
     public void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck)
         if(!rampUp && (loadedCars.size() < maxCars) && (car != this)){
-            Point carPos = car.getPoint();
-            Point truckPos = this.getPoint();
-            double posX = Math.pow(carPos.getX()-truckPos.getX(), 2);
-            double posY = Math.pow(carPos.getY()-truckPos.getY(), 2);
-            double distance = Math.sqrt(posX+posY);
+            double distance = calculateDistance(car.getPoint(), this.getPoint());
             if (distance < 5){
                 loadedCars.add(car);
                 car.point = this.getPoint();

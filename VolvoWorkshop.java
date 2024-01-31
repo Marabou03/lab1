@@ -1,6 +1,9 @@
 public class VolvoWorkshop extends Workshop{
 
-    public VolvoWorkshop() {super(10, "Volvo240");
+    private static final Car Volvo240 = new Volvo240();
+
+    public VolvoWorkshop() {super(10, "VolvoWrokers", Volvo240);
+
     }
 
 }
