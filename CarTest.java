@@ -234,6 +234,7 @@ class CarTest {
     void loadTruckWithTruck(){
         truck.loadCar(truck2);
     }*/
+
     @Test @Order(15)
     void unload(){
         truck.lowerRamp();
@@ -256,9 +257,18 @@ class CarTest {
     truck.raiseRamp();
     truck.startEngine();
     truck.move();
-        assertEquals(0.2, truck.point.getY());
-        assertEquals(0, truck.point.getX());
-        assertEquals(0.2, volvo.point.getY());
-        assertEquals(0, volvo.point.getX());
+    assertEquals(0.2, truck.point.getY());
+    assertEquals(0, truck.point.getX());
+    assertEquals(0.2, volvo.point.getY());
+    assertEquals(0, volvo.point.getX());
+    truck.stopEngine();
+    truck.lowerRamp();
+    truck.loadCar(truck2);
+    }
+
+
+    @Test @Order(16)
+    void testing(){
+            //VolvoWorkshop.point.setLocation(2,2);
     }
 }

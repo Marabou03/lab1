@@ -43,7 +43,9 @@ public  class Truck extends Car {
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
-        }else {
+        }else if (car.equals(this)) {
+            throw new IllegalArgumentException("can't load a truck in a truck");
+        } else {
             throw new IllegalArgumentException("Either the truck is full or the ramp is up");
         }
     }

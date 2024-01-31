@@ -2,28 +2,28 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Workshop {
-    private final Truck t;
+public class Workshop <T extends Car> {
+    private final Truck truck;
     protected int maxCars;
-    protected List<Car> currentCars;
+    protected List<T> currentCars;
     protected String workShopName;
-    protected Car carType;
+    protected Class<T> carType;
     private int x,y;
     private Point point;
 
 
-    protected Workshop (int maxCars, String workShopName, Car carType) {
-        this.t = new Truck(2, 20, Color.cyan, "scandic", 2);
+    protected Workshop (int maxCars, String workShopName, Class<T> carType) {
+        this.truck = new Truck(2, 20, Color.cyan, "scandic", 2);
         this.maxCars = maxCars;
         this.currentCars = new ArrayList<>(maxCars);
         this.workShopName = workShopName;
         this.carType = carType;
-        this.point = new Point(x, y);
+        this.point = new Point(5, 5);
     }
 
 
-    public void typeCarAllowed(Car car){
-        if (car.equals(carType)){
+    public void typeCarAllowed(T car){
+        if (car.getClass().equals(carType.getClass())){
             double distance = Truck.calculateDistance(car.point, this.point);
             if (distance < 5){
                 currentCars.add(car);
@@ -31,14 +31,20 @@ public abstract class Workshop {
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
-        }else {
-            throw new IllegalArgumentException("Either the truck is full or the ramp is up");
         }
     }
 
 
 
     public void theCarYouGet(){
+        if (!currentCars.isEmpty()) {
+            T fstcar = currentCars.getFirst();
+            Point carPoint = new Point(fstcar.point.getX(), fstcar.point.getY());// new Point
+            carPoint.setLocation(point.getX() + 5,point.getY() + 5);
+            fstcar.point = carPoint;
+            currentCars.removeFirst();
+        }
+    }
 
 
 
