@@ -232,7 +232,6 @@ class CarTest {
         truck.loadCar(volvo2);
         assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
-        assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
     }
     /*@Test @Order(14)
     void loadTruckWithTruck(){
