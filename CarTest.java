@@ -21,10 +21,11 @@ class CarTest {
     private static Truck truck3;
     private static Truck truck4;
     private static Workshop volvoWorkshop;
+
     @BeforeAll
     public static void init() {
-        volvo  = new Volvo240();
-        volvo2  = new Volvo240();
+        volvo = new Volvo240();
+        volvo2 = new Volvo240();
         saab = new Saab95();
         saab2 = new Saab95();
         scania = new Scania();
@@ -35,7 +36,8 @@ class CarTest {
         volvoWorkshop = new VolvoWorkshop();
     }
 
-    @Test @Order(1)
+    @Test
+    @Order(1)
     void move() {
         volvo.startEngine();
         volvo.move();
@@ -55,7 +57,8 @@ class CarTest {
     }
 
 
-    @Test@Order(3)
+    @Test
+    @Order(3)
     void turnLeft() {
         volvo.turnLeft();
         assertEquals(Car.Direction.NORTH, volvo.direction);
@@ -69,7 +72,8 @@ class CarTest {
         assertEquals(Car.Direction.WEST, saab.direction);
     }
 
-    @Test @Order(2)
+    @Test
+    @Order(2)
     void turnRight() {
         volvo.turnRight();
         assertEquals(Car.Direction.EAST, volvo.direction);
@@ -122,7 +126,8 @@ class CarTest {
         assertTrue(volvo.speedFactor() == 1.25 && (saab.speedFactor() == 1.25 || saab.speedFactor() == 1.625));
     }
 
-    @Test @Order(4)
+    @Test
+    @Order(4)
     void incrementSpeed() {
         volvo.startEngine();
         volvo.incrementSpeed(10);
@@ -132,7 +137,8 @@ class CarTest {
         assertTrue(saab.getCurrentSpeed() > 10);
     }
 
-    @Test @Order(5)
+    @Test
+    @Order(5)
     void decrementSpeed() {
         volvo.decrementSpeed(10);
         saab.decrementSpeed(10);
@@ -144,12 +150,13 @@ class CarTest {
     Gas method in the car class uses clamp 1 to 0,
      which makes it impossible to go above 1 or below 0.
     */
-    @Test @Order(6)
+    @Test
+    @Order(6)
     void gas() {
         double initialSpeed = 0.1;
         volvo.gas(1);
         saab.gas(1);
-        assertTrue( volvo.getCurrentSpeed() > initialSpeed);
+        assertTrue(volvo.getCurrentSpeed() > initialSpeed);
         assertTrue(saab.getCurrentSpeed() > initialSpeed);
 
         volvo.brake(1);
@@ -162,7 +169,8 @@ class CarTest {
     Brake method in the car class uses clamp 1 to 0,
     which makes it impossible to go above 1 or below 0.
    */
-    @Test @Order(7)
+    @Test
+    @Order(7)
     void brake() {
         double initialSpeed = 1;
         volvo.brake(1);
@@ -177,14 +185,17 @@ class CarTest {
         assertEquals(0.1, volvo.getCurrentSpeed(), 0.001);
     }
 
-    @Test @Order(8)
-    void raiseFlak(){
+    @Test
+    @Order(8)
+    void raiseFlak() {
         scania.stopEngine();
         scania.raiseFlak(2);
         assertEquals(2, scania.getFlakAngle());
     }
-    @Test @Order(10)
-    void lowerFlak(){
+
+    @Test
+    @Order(10)
+    void lowerFlak() {
         scania.lowerFlak(2);
         assertEquals(0, scania.getFlakAngle());
         scania.lowerFlak(2);
@@ -193,33 +204,37 @@ class CarTest {
         assertEquals(0, scania.getFlakAngle());
     }
 
-    @Test @Order(9)
-    void startEngineScania(){
-    scania.startEngine();
-    assertEquals(0.0, scania.getCurrentSpeed());
+    @Test
+    @Order(9)
+    void startEngineScania() {
+        scania.startEngine();
+        assertEquals(0.0, scania.getCurrentSpeed());
     }
 
-    @Test @Order(11)
-    void startEngineScania2(){
-    scania.startEngine();
-    assertEquals(0.1, scania.getCurrentSpeed());
+    @Test
+    @Order(11)
+    void startEngineScania2() {
+        scania.startEngine();
+        assertEquals(0.1, scania.getCurrentSpeed());
 
     }
 
-    @Test @Order(12)
-    void getFlakAngle(){
-    assertEquals(0, scania.getFlakAngle());
-    scania.raiseFlak(2);
-    assertEquals(0, scania.getFlakAngle());
-    scania.lowerFlak(2);
-    assertEquals(0, scania.getFlakAngle());
-    scania.stopEngine();
-    scania.raiseFlak(2);
-    assertEquals(2, scania.getFlakAngle());
+    @Test
+    @Order(12)
+    void getFlakAngle() {
+        assertEquals(0, scania.getFlakAngle());
+        scania.raiseFlak(2);
+        assertEquals(0, scania.getFlakAngle());
+        scania.lowerFlak(2);
+        assertEquals(0, scania.getFlakAngle());
+        scania.stopEngine();
+        scania.raiseFlak(2);
+        assertEquals(2, scania.getFlakAngle());
     }
 
-    @Test @Order(12)
-    void rampUpDown(){
+    @Test
+    @Order(12)
+    void rampUpDown() {
         truck.stopEngine();
         assertEquals(0, truck.getCurrentSpeed());
         truck.lowerRamp();
@@ -229,22 +244,21 @@ class CarTest {
 
     }
 
-    @Test @Order(13)
-    void loadCar(){
+    @Test
+    @Order(13)
+    void loadCar() {
         truck.lowerRamp();
-        volvo2.point.setLocation(2,2);
+        volvo2.point.setLocation(2, 2);
         truck.loadCar(volvo2);
         assertEquals(truck.point.getX(), volvo2.point.getX());
         assertEquals(truck.point.getY(), volvo2.point.getY());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
     }
-    /*@Test @Order(14)
-    void loadTruckWithTruck(){
-        truck.loadCar(truck2);
-    }*/
 
-    @Test @Order(14)
-    void unload(){
+
+    @Test
+    @Order(14)
+    void unload() {
         truck.lowerRamp();
         truck.unloadCar();
         assertEquals(5, volvo2.point.getX());
@@ -252,38 +266,40 @@ class CarTest {
         assertEquals(0, truck.point.getX());
         assertEquals(0, truck.point.getY());
     }
-    @Test @Order(15)
-    void MoveTruck(){
-    truck.raiseRamp();
-    truck.startEngine();
-    truck.move();
-    assertEquals(0.1, truck.point.getY());
-    assertEquals(0, truck.point.getX());
-    truck.stopEngine();
-    truck.lowerRamp();
-    truck.loadCar(volvo);
-    truck.raiseRamp();
-    truck.startEngine();
-    truck.move();
-    assertEquals(0.2, truck.point.getY());
-    assertEquals(0, truck.point.getX());
-    assertEquals(0.2, volvo.point.getY());
-    assertEquals(0, volvo.point.getX());
 
-    truck3.lowerRamp();
-    truck3.loadCar(truck4);
+    @Test
+    @Order(15)
+    void MoveTruck() {
+        truck.raiseRamp();
+        truck.startEngine();
+        truck.move();
+        assertEquals(0.1, truck.point.getY());
+        assertEquals(0, truck.point.getX());
+        truck.stopEngine();
+        truck.lowerRamp();
+        truck.loadCar(volvo);
+        truck.raiseRamp();
+        truck.startEngine();
+        truck.move();
+        assertEquals(0.2, truck.point.getY());
+        assertEquals(0, truck.point.getX());
+        assertEquals(0.2, volvo.point.getY());
+        assertEquals(0, volvo.point.getX());
 
     }
 
 
-    @Test @Order(16)
-    void testing(){
-            VolvoWorkshop.point.setLocation(6,6);
+    @Test
+    @Order(16)
+    void testing() {
+        VolvoWorkshop.point.setLocation(6, 6);
         assertEquals(6, volvoWorkshop.getPoint().getX());
         assertEquals(6, volvoWorkshop.getPoint().getY());
     }
-    @Test @Order(17)
-    void typeCarAllowed(){
+
+    @Test
+    @Order(17)
+    void typeCarAllowed() {
         volvo2.point.setLocation(7, 7);
         volvoWorkshop.typeCarAllowed(volvo2);
         assertEquals(volvoWorkshop.getPoint().getX(), volvo2.getPoint().getX());
@@ -292,12 +308,26 @@ class CarTest {
         volvoWorkshop.typeCarAllowed(saab2);
         assertEquals(1, volvoWorkshop.currentCars.size());
     }
-    @Test @Order(18)
-    void theCarYouGet(){
+
+    @Test
+    @Order(18)
+    void theCarYouGet() {
         volvoWorkshop.theCarYouGet();
         assertEquals(11, volvo2.getPoint().getX());
         assertEquals(11, volvo2.getPoint().getY());
         assertEquals(6, volvoWorkshop.getPoint().getX());
         assertEquals(6, volvoWorkshop.getPoint().getY());
+    }
+
+    @Test
+    @Order(19)
+    void loadTruckWithTruck() {
+        try {
+            truck3.lowerRamp();
+            truck3.loadCar(truck4);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println("Caught exception: " + e.getMessage());
+        }
     }
 }

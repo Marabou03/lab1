@@ -4,24 +4,26 @@ import java.util.List;
 
 public class Workshop <T extends Car> {
     private final Truck truck;
+    private final Volvo240 carV;
+
     protected int maxCars;
     protected List<T> currentCars;
     protected String workShopName;
     protected Class<T> carType;
     protected static Point point;
 
-    public Point getPoint() {
-        return point;
-    }
-
 
     protected Workshop (int maxCars, String workShopName, Class<T> carType) {
         this.truck = new Truck(2, 20, Color.cyan, "scandic", 2, "truck");
+        this.carV = new Volvo240();
         this.maxCars = maxCars;
         this.currentCars = new ArrayList<>(maxCars);
         this.workShopName = workShopName;
         this.carType = carType;
         this.point = new Point(5, 5);
+    }
+    public Point getPoint() {
+        return point;
     }
 
 
