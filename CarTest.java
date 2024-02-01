@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CarTest {
     private static Volvo240 volvo;
     private static Volvo240 volvo2;
+    private static Volvo240 volvo3;
     private static Saab95 saab;
     private static Saab95 saab2;
     private static Scania scania;
@@ -30,6 +31,7 @@ class CarTest {
     public static void init() {
         volvo = new Volvo240();
         volvo2 = new Volvo240();
+        volvo3 = new Volvo240();
         saab = new Saab95();
         saab2 = new Saab95();
         scania = new Scania();
@@ -249,9 +251,10 @@ class CarTest {
     @Test @Order(14)
     void unload() {
         truck.lowerRamp();
+        truck.loadCar(volvo3);
         truck.unloadCar();
-        assertEquals(5, volvo2.point.getX());
-        assertEquals(5, volvo2.point.getY());
+        assertEquals(5, volvo3.point.getX());
+        assertEquals(5, volvo3.point.getY());
         assertEquals(0, truck.point.getX());
         assertEquals(0, truck.point.getY());
     }

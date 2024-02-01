@@ -8,7 +8,7 @@ public class Workshop <T extends Car> {
     protected List<T> currentCars;
     protected String workShopName;
     protected Class<T> carType;
-    protected static Point point;
+    protected  Point point;
     protected final Loading loader;
 
     protected Workshop (int maxCars, String workShopName, Class<T> carType) {
@@ -26,9 +26,10 @@ public class Workshop <T extends Car> {
 
 
     protected void typeCarAllowed(T car){
+        loader.loadCar(this, car);
         /*System.out.println(car.getClass());
         System.out.println(this.getClass());*/
-        if (carType.isInstance(car)){
+        /*if (carType.isInstance(car)){
             double distance = loader.calculateDistance(car.point, this.point);
             if (distance < 5){
                 currentCars.add(car);
@@ -36,19 +37,20 @@ public class Workshop <T extends Car> {
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
-        }
+        }*/
     }
 
 
 
     protected void theCarYouGet(){
-        if (!currentCars.isEmpty()) {
+        loader.unloadCar(this);
+        /*if (!currentCars.isEmpty()) {
             T fstCar = currentCars.getFirst();
             Point carPoint = new Point(fstCar.point.getX(), fstCar.point.getY());// new Point
             carPoint.setLocation(point.getX() + 5,point.getY() + 5);
             fstCar.point = carPoint;
             currentCars.removeFirst();
-        }
+        }*/
     }
 
 }

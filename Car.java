@@ -25,6 +25,10 @@ public abstract class Car implements Movable{
         return point;
     }
 
+    public void setPoint(Point carPoint) {
+        this.point = carPoint;
+    }
+
     protected enum Direction {
         NORTH, EAST, SOUTH, WEST
     }

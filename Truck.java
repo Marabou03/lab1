@@ -34,36 +34,12 @@ public class Truck extends Car {
     }
 
     protected void loadCar(Car car) {
-        /*System.out.println(this.carType);
-        System.out.println(car.carType);*/ // to see what happens when using loadcar
-        boolean allowed = car.vehicleType.equals(this.vehicleType);
-        if (!allowed){
-            if(!rampUp && (loadedCars.size() < maxCars)){
-                double distance = loader.calculateDistance(car.getPoint(), this.getPoint());
-                if (distance < 5){
-                    loadedCars.add(car);
-                    car.point = this.getPoint();
-                } else{
-                    throw new IllegalArgumentException("Car is too far away");
-                }
-            }else {
-                throw new IllegalArgumentException("Either the truck is full or the ramp is up");
-            }
-        } else {
-            throw new IllegalArgumentException("can't load a truck in a truck");
-        }
+        loader.loadCar(this, car);
+
     }
 
     protected void unloadCar() {
-        if(!rampUp && !loadedCars.isEmpty() ){
-            Car lastCar = loadedCars.getLast();
-            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());// new Point
-            carPoint.setLocation(point.getX() + 5,point.getY() + 5);
-            lastCar.point = carPoint;
-            loadedCars.removeLast();
-        }else{
-            throw new IllegalArgumentException("Truck is empty or the ramp is up");
-        }
+        loader.unloadCar(this);
     }
 
     protected List<Car> getLoadedCars() {
