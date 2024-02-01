@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.lang.Math;
 
 public abstract class Car implements Movable{
+
+    protected String carType = "car";
     protected Point point;
     protected Direction direction;
     protected int nrDoors; // Number of doors on the car
@@ -11,6 +13,7 @@ public abstract class Car implements Movable{
     protected String modelName; // The car model name
 
     protected Car (int nrDoors, double enginePower, Color color, String modelName){
+        this.carType = carType;
         this.direction = Direction.NORTH;
         this.point = new Point(0, 0);
         this.nrDoors = nrDoors;

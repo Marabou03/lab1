@@ -18,6 +18,8 @@ class CarTest {
     private static Scania scania;
     private static Truck truck;
     private static Truck truck2;
+    private static Truck truck3;
+    private static Truck truck4;
     private static Workshop volvoWorkshop;
     @BeforeAll
     public static void init() {
@@ -28,6 +30,8 @@ class CarTest {
         scania = new Scania();
         truck = new VolvoTruck();
         truck2 = new VolvoTruck();
+        truck3 = new VolvoTruck();
+        truck4 = new VolvoTruck();
         volvoWorkshop = new VolvoWorkshop();
     }
 
@@ -230,7 +234,8 @@ class CarTest {
         truck.lowerRamp();
         volvo2.point.setLocation(2,2);
         truck.loadCar(volvo2);
-        assertEquals(truck.getPoint().getX(), volvo2.getPoint().getX());
+        assertEquals(truck.point.getX(), volvo2.point.getX());
+        assertEquals(truck.point.getY(), volvo2.point.getY());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
     }
     /*@Test @Order(14)
@@ -238,16 +243,16 @@ class CarTest {
         truck.loadCar(truck2);
     }*/
 
-    @Test @Order(15)
+    @Test @Order(14)
     void unload(){
         truck.lowerRamp();
         truck.unloadCar();
-        assertEquals(5, volvo2.getPoint().getX());
-        assertEquals(5, volvo2.getPoint().getY());
-        assertEquals(0, truck.getPoint().getX());
-        assertEquals(0, truck.getPoint().getY());
+        assertEquals(5, volvo2.point.getX());
+        assertEquals(5, volvo2.point.getY());
+        assertEquals(0, truck.point.getX());
+        assertEquals(0, truck.point.getY());
     }
-    @Test @Order(16)
+    @Test @Order(15)
     void MoveTruck(){
     truck.raiseRamp();
     truck.startEngine();
@@ -264,15 +269,18 @@ class CarTest {
     assertEquals(0, truck.point.getX());
     assertEquals(0.2, volvo.point.getY());
     assertEquals(0, volvo.point.getX());
-    truck.stopEngine();
-    truck.lowerRamp();
-    truck.loadCar(truck2);
+
+    truck3.lowerRamp();
+    truck3.loadCar(truck4);
+
     }
 
 
     @Test @Order(16)
     void testing(){
-            //VolvoWorkshop.point.setLocation(2,2);
+            VolvoWorkshop.point.setLocation(6,6);
+        assertEquals(6, volvoWorkshop.getPoint().getX());
+        assertEquals(6, volvoWorkshop.getPoint().getY());
     }
     @Test @Order(17)
     void typeCarAllowed(){
@@ -287,9 +295,9 @@ class CarTest {
     @Test @Order(18)
     void theCarYouGet(){
         volvoWorkshop.theCarYouGet();
-        assertEquals(10, volvo2.getPoint().getX());
-        assertEquals(10, volvo2.getPoint().getY());
-        assertEquals(5, volvoWorkshop.getPoint().getX());
-        assertEquals(5, volvoWorkshop.getPoint().getY());
+        assertEquals(11, volvo2.getPoint().getX());
+        assertEquals(11, volvo2.getPoint().getY());
+        assertEquals(6, volvoWorkshop.getPoint().getX());
+        assertEquals(6, volvoWorkshop.getPoint().getY());
     }
 }
