@@ -2,9 +2,8 @@ import java.awt.Color;
 import java.lang.Math;
 
 public abstract class Car implements Movable{
-
-    protected String carType = "car";
-    protected Point point;
+    protected String vehicleType;
+    public Point point;
     protected Direction direction;
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
@@ -12,8 +11,8 @@ public abstract class Car implements Movable{
     protected Color color; // Color of the car
     protected String modelName; // The car model name
 
-    protected Car (int nrDoors, double enginePower, Color color, String modelName){
-        this.carType = carType;
+    protected Car (int nrDoors, double enginePower, Color color, String modelName, String vehicleType){
+        this.vehicleType = vehicleType;
         this.direction = Direction.NORTH;
         this.point = new Point(0, 0);
         this.nrDoors = nrDoors;
@@ -26,11 +25,7 @@ public abstract class Car implements Movable{
         return point;
     }
 
-    public void setPoint(Point point) {
-        this.point = point;
-    }
-
-    public enum Direction {
+    protected enum Direction {
         NORTH, EAST, SOUTH, WEST
     }
 

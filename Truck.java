@@ -4,13 +4,14 @@ import java.util.List;
 import java.lang.Math;
 
 
-public  class Truck extends Car {
+public class Truck extends Car {
     private final int maxCars; //Max amount of cars possible to carry.
     private final List<Car> loadedCars; // the amount of cars being carried.
     private boolean rampUp; // Initial state is ramp up/closed.
-    public Truck(int nrDoors, double enginePower, Color color, String modelName, int maxCars, String carType) {
-        super(nrDoors, enginePower, color, modelName);
-        this.carType = carType;
+
+    public Truck(int nrDoors, double enginePower, Color color, String modelName, int maxCars, String vehicleType) {
+        super(nrDoors, enginePower, color, modelName, vehicleType);
+        this.vehicleType = vehicleType;
         this.maxCars = maxCars;
         this.loadedCars = new ArrayList<>(maxCars);
         this.rampUp = true;
@@ -35,10 +36,11 @@ public  class Truck extends Car {
         double posY = Math.pow(point1.getY() - point2.getY(), 2);
         return Math.sqrt(posX + posY);
     }
-    protected void loadCar(Car car) {// car be in a certain range like radius=10, can't be another truck //(car != Truck) //car.equals(this
-/*System.out.println(this.carType);
-System.out.println(car.carType);*/
-        if (!(car.carType.equals(this.carType))){
+    protected void loadCar(Car car) {
+        /*System.out.println(this.carType);
+        System.out.println(car.carType);*/ // to see what happens when using loadcar
+        boolean allowed = car.vehicleType.equals(this.vehicleType);
+        if (!allowed){
             if(!rampUp && (loadedCars.size() < maxCars)){
                 double distance = calculateDistance(car.getPoint(), this.getPoint());
                 if (distance < 5){
@@ -50,7 +52,7 @@ System.out.println(car.carType);*/
             }else {
                 throw new IllegalArgumentException("Either the truck is full or the ramp is up");
             }
-        } else if ((car.carType== this.carType)) {
+        } else {
             throw new IllegalArgumentException("can't load a truck in a truck");
         }
     }
