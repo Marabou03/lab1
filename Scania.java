@@ -5,7 +5,7 @@ public class Scania extends Car{
     private double flakAngle;
 
     public Scania(){
-        super(2, 100, Color.gray, "Scania");
+        super(2, 100, Color.gray, "Scania", "car");
         this.flakAngle = 0;
     }
     public double getFlakAngle() {

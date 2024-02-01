@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Workshop <T extends Car> {
     private final Truck truck;
-    private final Volvo240 carV;
+    private final Car carV;
 
     protected int maxCars;
     protected List<T> currentCars;
@@ -15,7 +15,7 @@ public class Workshop <T extends Car> {
 
     protected Workshop (int maxCars, String workShopName, Class<T> carType) {
         this.truck = new Truck(2, 20, Color.cyan, "scandic", 2, "truck");
-        this.carV = new Volvo240();
+        this.carV = new Saab95();
         this.maxCars = maxCars;
         this.currentCars = new ArrayList<>(maxCars);
         this.workShopName = workShopName;
@@ -28,6 +28,8 @@ public class Workshop <T extends Car> {
 
 
     protected void typeCarAllowed(T car){
+        System.out.println(car.getClass());
+        System.out.println(this.getClass());
         if (carType.isInstance(car)){
             double distance = Truck.calculateDistance(car.point, this.point);
             if (distance < 5){

@@ -319,8 +319,12 @@ class CarTest {
         assertEquals(6, volvoWorkshop.getPoint().getY());
     }
 
-    @Test
-    @Order(19)
+    @Test@Order(20)
+    void loadWrongCarInWorkshop(){
+        volvoWorkshop.typeCarAllowed(saab);
+
+    }
+    @Test @Order(19)
     void loadTruckWithTruck() {
         try {
             truck3.lowerRamp();
