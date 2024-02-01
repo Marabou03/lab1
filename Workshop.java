@@ -3,24 +3,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Workshop <T extends Car> {
-    private final Truck truck;
     private final Car carV;
-
     protected int maxCars;
     protected List<T> currentCars;
     protected String workShopName;
     protected Class<T> carType;
     protected static Point point;
-
+    protected final Loading loader;
 
     protected Workshop (int maxCars, String workShopName, Class<T> carType) {
-        this.truck = new Truck(2, 20, Color.cyan, "scandic", 2, "truck");
         this.carV = new Saab95();
         this.maxCars = maxCars;
         this.currentCars = new ArrayList<>(maxCars);
         this.workShopName = workShopName;
         this.carType = carType;
         this.point = new Point(5, 5);
+        this.loader = new Loading();
     }
     public Point getPoint() {
         return point;
@@ -28,10 +26,10 @@ public class Workshop <T extends Car> {
 
 
     protected void typeCarAllowed(T car){
-        System.out.println(car.getClass());
-        System.out.println(this.getClass());
+        /*System.out.println(car.getClass());
+        System.out.println(this.getClass());*/
         if (carType.isInstance(car)){
-            double distance = Truck.calculateDistance(car.point, this.point);
+            double distance = loader.calculateDistance(car.point, this.point);
             if (distance < 5){
                 currentCars.add(car);
                 car.point = this.point;

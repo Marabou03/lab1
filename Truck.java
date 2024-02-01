@@ -8,6 +8,7 @@ public class Truck extends Car {
     private final int maxCars; //Max amount of cars possible to carry.
     private final List<Car> loadedCars; // the amount of cars being carried.
     private boolean rampUp; // Initial state is ramp up/closed.
+    private final Loading loader;
 
     public Truck(int nrDoors, double enginePower, Color color, String modelName, int maxCars, String vehicleType) {
         super(nrDoors, enginePower, color, modelName, vehicleType);
@@ -15,6 +16,7 @@ public class Truck extends Car {
         this.maxCars = maxCars;
         this.loadedCars = new ArrayList<>(maxCars);
         this.rampUp = true;
+        this.loader = new Loading();
     }
     protected boolean getRampUp(){
         return rampUp;
@@ -31,18 +33,13 @@ public class Truck extends Car {
         rampUp = true;
     }
 
-    protected static double calculateDistance(Point point1, Point point2) {
-        double posX = Math.pow(point1.getX() - point2.getX(), 2);
-        double posY = Math.pow(point1.getY() - point2.getY(), 2);
-        return Math.sqrt(posX + posY);
-    }
     protected void loadCar(Car car) {
         /*System.out.println(this.carType);
         System.out.println(car.carType);*/ // to see what happens when using loadcar
         boolean allowed = car.vehicleType.equals(this.vehicleType);
         if (!allowed){
             if(!rampUp && (loadedCars.size() < maxCars)){
-                double distance = calculateDistance(car.getPoint(), this.getPoint());
+                double distance = loader.calculateDistance(car.getPoint(), this.getPoint());
                 if (distance < 5){
                     loadedCars.add(car);
                     car.point = this.getPoint();
@@ -87,5 +84,9 @@ public class Truck extends Car {
                 car.point = this.getPoint();
             }
         }
+    }
+
+    public int getMaxCars() {
+        return maxCars;
     }
 }

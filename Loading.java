@@ -5,7 +5,7 @@ public class Loading implements LoadingInterface{
 
     @Override
     public void loadCar(Truck truck, Car car) {
-        if (!(car instanceof Truck) && !(truck.carType.equals(car.carType))) {
+        if (!(car instanceof Truck) && !(truck.vehicleType.equals(car.vehicleType))) {
             if (!truck.getRampUp() && (truck.getLoadedCars().size() < truck.getMaxCars())) {
                 double distance = calculateDistance(car.getPoint(), truck.getPoint());
                 if (distance < 5) {
@@ -19,7 +19,7 @@ public class Loading implements LoadingInterface{
             }
         } else if (car instanceof Truck && car != truck) {
             throw new IllegalArgumentException("Can't load a truck into another truck");
-        } else if (truck.carType.equals(car.carType)) {
+        } else if (truck.vehicleType.equals(car.vehicleType)) {
             throw new IllegalArgumentException("Can't load a truck with the same type into this truck");
         }
     }
