@@ -50,5 +50,9 @@ public class Workshop <T extends Car> {
             currentCars.removeFirst();
         }
     }
+    protected List<Car> getLoadedCar() {
+        // Return a list of type T instead of Car
+        return new ArrayList<>(currentCars);
+    }
 
 }

@@ -36,10 +36,4 @@ public class Scania extends Car{
             super.startEngine();
         }
     }
-
-    @Override
-    protected void stopEngine() {
-        super.stopEngine();
-        platform.flakAngle = 0;
-    }
 }

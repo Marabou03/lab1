@@ -316,4 +316,11 @@ class CarTest {
             System.out.println("Caught exception: " + e.getMessage());
         }
     }
+    @Test @Order(21)
+    void unlaodWorkkShop(){
+
+        assertEquals(2, vShop.getLoadedCar().size());
+        vShop.theCarYouGet();
+        assertEquals(1, vShop.getLoadedCar().size());
+    }
 }
