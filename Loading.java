@@ -1,44 +1,70 @@
-public class Loading implements LoadingInterface{
-    public Loading() {
-    }
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.Math;
 
+public class Loading<T extends Car> implements LoadingInterface {
+    private Point point;
+    protected Class<T> carType;
+
+    protected List<T> currentCars; // Use List<T> instead of List<? super T>
+    private List<Car> listOfCar = new ArrayList<>();
+
+    public Loading() {
+        //this.carType =carType;
+        //this.currentCars = currentCars;
+    }
 
     @Override
     public void loadCar(Truck truck, Car car) {
-        if (!(car instanceof Truck) && !(truck.vehicleType.equals(car.vehicleType))) {
-            if (!truck.getRampUp() && (truck.getLoadedCars().size() < truck.getMaxCars())) {
-                double distance = calculateDistance(car.getPoint(), truck.getPoint());
-                if (distance < 5) {
-                    truck.getLoadedCars().add(car);
-                    car.point = truck.getPoint();
-                } else {
-                    throw new IllegalArgumentException("Car is too far away");
-                }
-            } else {
-                throw new IllegalArgumentException("Either the truck is full or the ramp is up");
-            }
-        } else if (car instanceof Truck && car != truck) {
-            throw new IllegalArgumentException("Can't load a truck into another truck");
+        double distance = calculateDistance(car.getPoint(), truck.getPoint());
+        if (distance < 5) {
+            truck.getLoadedCars().add(car);
+            car.setPoint(truck.getPoint());
         } else {
-            throw new IllegalArgumentException("Can't load a truck with the same type into this truck");
+            throw new IllegalArgumentException("Car is too far away");
         }
     }
 
-    @Override
+    public void loadCar2(Workshop<T> workshop, T car) {
+        if (carType.isInstance(car)) {
+            double distance = calculateDistance(car.getPoint(), workshop.getPoint());
+            if (distance < 5) {
+                currentCars.add(car);
+                car.setPoint(workshop.point);
+            } else {
+                throw new IllegalArgumentException("Car is too far away");
+            }
+        } else {
+            throw new IllegalArgumentException("Incompatible car type");
+        }
+    }
+
+    //@Override
     public void unloadCar(Truck truck) {
-        System.out.println(truck.getClass());
-        if (!truck.getRampUp() || !truck.getLoadedCars().isEmpty()) {
-            //System.out.println(car.getClass());
-            System.out.println(truck.getClass());
+        if (!truck.getRampUp() && !truck.getLoadedCars().isEmpty()) {
             Car lastCar = truck.getLoadedCars().getLast();
-            Point carPoint = new Point(truck.getPoint().getX() + 5, truck.getPoint().getY() + 5);
-            lastCar.setPoint(carPoint);
+            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());
+            carPoint.setLocation(truck.getPoint().getX() + 5, truck.getPoint().getY() + 5);
+            lastCar.point = carPoint;
             truck.getLoadedCars().removeLast();
         } else {
             throw new IllegalArgumentException("Truck is empty or the ramp is up");
         }
     }
 
+    protected List<Car> getLoadedCar() {
+        // Return a list of type T instead of Car
+        return new ArrayList<>(listOfCar);
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
 
     protected double calculateDistance(Point point1, Point point2) {
         double posX = Math.pow(point1.getX() - point2.getX(), 2);

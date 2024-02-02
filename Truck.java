@@ -5,18 +5,20 @@ import java.lang.Math;
 
 
 public class Truck extends Car {
+    private final Loading loader;
     private final int maxCars; //Max amount of cars possible to carry.
     private final List<Car> loadedCars; // the amount of cars being carried.
     private boolean rampUp; // Initial state is ramp up/closed.
-    private final Loading loader;
+
 
     public Truck(int nrDoors, double enginePower, Color color, String modelName, int maxCars, String vehicleType) {
         super(nrDoors, enginePower, color, modelName, vehicleType);
+        this.loader = new Loading();
         this.vehicleType = vehicleType;
         this.maxCars = maxCars;
         this.loadedCars = new ArrayList<>(maxCars);
         this.rampUp = true;
-        this.loader = new Loading();
+
     }
     protected boolean getRampUp(){
         return rampUp;
@@ -34,12 +36,37 @@ public class Truck extends Car {
     }
 
     protected void loadCar(Car car) {
-        loader.loadCar(this, car);
-
+        //loader.loadCar(this, car);
+        /*System.out.println(this.carType);
+        System.out.println(car.carType);*/ // to see what happens when using loadcar
+        boolean allowed = car.vehicleType.equals(this.vehicleType);
+        if (!allowed){
+            if(!rampUp && (loadedCars.size() < maxCars)){
+                double distance = loader.calculateDistance(car.getPoint(), this.getPoint());
+                if (distance < 5){
+                    loadedCars.add(car);
+                    car.point = this.getPoint();
+                } else{
+                    throw new IllegalArgumentException("Car is too far away");
+                }
+            }else {
+                throw new IllegalArgumentException("Either the truck is full or the ramp is up");
+            }
+        } else {
+            throw new IllegalArgumentException("can't load a truck in a truck");
+        }
     }
 
     protected void unloadCar() {
-        loader.unloadCar(this);
+        if(!rampUp && !loadedCars.isEmpty() ){
+            Car lastCar = loadedCars.getLast();
+            Point carPoint = new Point(lastCar.point.getX(), lastCar.point.getY());// new Point
+            carPoint.setLocation(point.getX() + 5,point.getY() + 5);
+            lastCar.point = carPoint;
+            loadedCars.removeLast();
+        }else{
+            throw new IllegalArgumentException("Truck is empty or the ramp is up");
+        }
     }
 
     protected List<Car> getLoadedCars() {

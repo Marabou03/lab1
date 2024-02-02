@@ -3,7 +3,6 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 
 import java.awt.*;
@@ -245,6 +244,7 @@ class CarTest {
         assertEquals(truck.point.getX(), volvo2.point.getX());
         assertEquals(truck.point.getY(), volvo2.point.getY());
         assertEquals(truck.getPoint().getY(), volvo2.getPoint().getY());
+        assertEquals(1, truck.getLoadedCars().size());
     }
 
 
@@ -301,7 +301,11 @@ class CarTest {
         volvo2.point.setLocation(5,5);
         vShop.typeCarAllowed(volvo2);
         assertEquals(2, vShop.currentCars.size());
+        //vShop.typeCarAllowed(saab2); // gives a static (compile time) error.
 
+        /*Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            vShop.typeCarAllowed(saab2);});
+        System.out.println(exception);*/
     }
     @Test @Order(19)
     void loadTruckWithTruck() {
@@ -309,7 +313,6 @@ class CarTest {
             truck3.lowerRamp();
             truck3.loadCar(truck4);
         } catch (Exception e) {
-            //e.printStackTrace();
             System.out.println("Caught exception: " + e.getMessage());
         }
     }
