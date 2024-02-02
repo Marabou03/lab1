@@ -2,7 +2,7 @@ import java.awt.*;
 import java.lang.Math;
 
 public class Scania extends Car{
-    private Platform platform;
+    private final Platform platform;
 
     public Scania(){
         super(2, 100, Color.gray, "Scania", "truck");
@@ -13,20 +13,33 @@ public class Scania extends Car{
         return platform.getFlakAngle();
     }
     public void raiseFlak(double raise) {
-        platform.raiseFlak(raise);
+        if (getCurrentSpeed() == 0) {
+            platform.raiseFlak(raise);
+        }else {
+            platform.flakAngle = 0;
+        }
+
     }
 
     public void lowerFlak(double lower ) {
-        platform.lowerFlak(lower);
+        if (getCurrentSpeed() == 0) {
+            platform.lowerFlak(lower);
+        }else {
+            platform.flakAngle = 0;
+        }
+
     }
 
-
+    @Override
     protected void startEngine() {
-        platform.startEngine();
+        if (platform.flakAngle == 0) {
+            super.startEngine();
+        }
     }
 
-
+    @Override
     protected void stopEngine() {
-        platform.stopEngine();
+        super.stopEngine();
+        platform.flakAngle = 0;
     }
 }
