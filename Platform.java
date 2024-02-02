@@ -3,7 +3,6 @@ import java.awt.*;
 public class Platform{
     protected double flakAngle;
     public Platform(){
-        //super(2,200, Color.cyan, "name", "truck");
         this.flakAngle = 0;
     }
     public double getFlakAngle() {
@@ -15,9 +14,7 @@ public class Platform{
     }
 
     public void lowerFlak(double lower ) {
-
             double lowertmp = flakAngle - lower;
             flakAngle = Math.clamp(lowertmp, 0 , 70);
-
     }
 }

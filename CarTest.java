@@ -190,6 +190,12 @@ class CarTest {
         assertEquals(2, scania.getFlakAngle());
     }
 
+    @Test @Order(9)
+    void startEngineScania() {
+        scania.startEngine();
+        assertEquals(0.0, scania.getCurrentSpeed());
+    }
+
     @Test @Order(10)
     void lowerFlak() {
         scania.lowerFlak(2);
@@ -198,12 +204,6 @@ class CarTest {
         assertEquals(0, scania.getFlakAngle());
         scania.lowerFlak(71);
         assertEquals(0, scania.getFlakAngle());
-    }
-
-    @Test @Order(9)
-    void startEngineScania() {
-        scania.startEngine();
-        assertEquals(0.0, scania.getCurrentSpeed());
     }
 
     @Test @Order(11)
