@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math;
 
-public class Loading<T extends Car> implements LoadingInterface {
+public class Loading<T extends Car>{
     private Point point;
     protected Class<T> carType;
 
@@ -15,7 +15,6 @@ public class Loading<T extends Car> implements LoadingInterface {
         //this.currentCars = currentCars;
     }
 
-    @Override
     public void loadCar(Truck truck, Car car) {
         double distance = calculateDistance(car.getPoint(), truck.getPoint());
         if (distance < 5) {
