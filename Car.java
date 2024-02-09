@@ -11,6 +11,7 @@ public abstract class Car implements Movable{
     protected double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
+    protected boolean engineOn;
 
     protected Car (int nrDoors, double enginePower, Color color, String modelName, String vehicleType){
         this.loader = new Loading();
@@ -21,6 +22,7 @@ public abstract class Car implements Movable{
         this.color = color;
         this.enginePower = enginePower;
         this.modelName = modelName;
+        //this.engineOn = false;
         stopEngine();
     }
     public Point getPoint() {
@@ -37,19 +39,21 @@ public abstract class Car implements Movable{
 
     @Override
     public void move() {
-        switch (direction) {
-            case NORTH:
-                point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
-                break;
-            case EAST:
-                point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
-                break;
-            case SOUTH:
-                point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
-                break;
-            case WEST:
-                point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
-                break;
+        if (engineOn) {
+            switch (direction) {
+                case NORTH:
+                    point.setLocation(point.getX(), point.getY() + this.getCurrentSpeed());
+                    break;
+                case EAST:
+                    point.setLocation(point.getX() + this.getCurrentSpeed(), point.getY());
+                    break;
+                case SOUTH:
+                    point.setLocation(point.getX(), point.getY() - this.getCurrentSpeed());
+                    break;
+                case WEST:
+                    point.setLocation(point.getX() - this.getCurrentSpeed(), point.getY());
+                    break;
+            }
         }
     }
 
@@ -89,12 +93,10 @@ public abstract class Car implements Movable{
     }
 
     protected void startEngine(){
-        currentSpeed = 0.1;
+        engineOn = true;
     }
 
-    protected void stopEngine(){
-        currentSpeed = 0;
-    }
+    protected void stopEngine(){ engineOn = false; currentSpeed = 0; }
 
     protected double speedFactor(){
         return 0;

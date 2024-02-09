@@ -17,10 +17,20 @@ public class DrawPanel extends JPanel{
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
+    BufferedImage saabImage;
+    Point saabPoint = new Point();
+
+    //BufferedImage scaniaImage;
+    //Point scaniaPoint = new Point();
+
     // TODO: Make this general for all cars
     void moveit(int x, int y){
         volvoPoint.x = x;
         volvoPoint.y = y;
+        saabPoint.x = x + 200;
+        saabPoint.y = y;
+        //scaniaPoint.x = x + 400;
+        // scaniaPoint.y = y;
     }
 
     // Initializes the panel and reads the images
@@ -38,6 +48,8 @@ public class DrawPanel extends JPanel{
             // if you are starting in IntelliJ.
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
+            //scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
         } catch (IOException ex)
         {
             ex.printStackTrace();
@@ -52,5 +64,7 @@ public class DrawPanel extends JPanel{
         super.paintComponent(g);
         g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
+        //g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);
     }
 }

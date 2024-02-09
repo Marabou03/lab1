@@ -31,6 +31,8 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95());
+        //cc.cars.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -43,14 +45,24 @@ public class CarController {
     * view to update its images. Change this method to your needs.
     * */
     private class TimerListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
+            double z = 0;
             for (Car car : cars) {
+                // car.setPoint(car.point.setLocation(z,0));
+
                 car.move();
                 int x = (int) Math.round(car.getPoint().getX());
                 int y = (int) Math.round(car.getPoint().getY());
+                if (car.getPoint().getY() > frame.getHeight() - 300) {
+                    car.direction = Car.Direction.SOUTH;
+                } else if (car.getPoint().getY() < 0) {
+                    car.direction = Car.Direction.NORTH;
+                }
                 frame.drawPanel.moveit(x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
+                //z=z+10;
             }
         }
     }
@@ -65,9 +77,18 @@ public class CarController {
     }
     void brake(int amount) {
         double brake = ((double) amount) / 100;
-        for (Car car : cars
-        ) {
+        for (Car car : cars) {
             car.brake(brake);
+        }
+    }
+    void startEngine() {
+        for (Car car : cars) {
+            car.startEngine();
+        }
+    }
+    void stopEngine() {
+        for (Car car : cars) {
+            car.stopEngine();
         }
     }
 }
