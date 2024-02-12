@@ -25,5 +25,9 @@ public class Point {
         this.y = y;
     }
 
+    public void translate(Point point, int dx, int dy) {
+        point.x += dx;
+        point.y += dy;
+    }
 
 }

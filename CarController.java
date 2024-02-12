@@ -91,4 +91,21 @@ public class CarController {
             car.stopEngine();
         }
     }
+    void setTurboOn() {
+        for (Car car : cars) {
+            if (car instanceof Saab95 saab) { // Check if the car is a Saab95
+                // Cast the car to Saab95
+                saab.setTurboOn(); // Set turbo on for Saab95
+            }
+        }
+    }
+
+    void setTurboOff() {
+        for (Car car : cars) {
+            if (car instanceof Saab95 saab) { // Check if the car is a Saab95
+                // Cast the car to Saab95
+                saab.setTurboOff(); // Set turbo off for Saab95
+            }
+        }
+    }
 }
