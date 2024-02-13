@@ -301,11 +301,6 @@ class CarTest {
         volvo2.point.setLocation(5,5);
         vShop.typeCarAllowed(volvo2);
         assertEquals(2, vShop.currentCars.size());
-        //vShop.typeCarAllowed(saab2); // gives a static (compile time) error.
-
-        /*Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            vShop.typeCarAllowed(saab2);});
-        System.out.println(exception);*/
     }
     @Test @Order(19)
     void loadTruckWithTruck() {
