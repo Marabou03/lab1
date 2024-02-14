@@ -25,12 +25,15 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
+    static ArrayList<Car> cars = new ArrayList<>();
     //Workshop<Volvo240> = new Workshop<Volvo240>(2, "volvoWorkshop", "Volvo240",);
 
     //private Loading loader;
     //methods:
 
+    public ArrayList<Car> getCars() {
+        return cars;
+    }
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
@@ -40,6 +43,10 @@ public class CarController {
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
+
+        for (int i = 0; i < cars.size(); i++ ){
+            cars.get(i).getPoint().setX(i*100);
+        }
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
