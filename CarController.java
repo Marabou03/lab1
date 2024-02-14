@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ConvolveOp;
 import java.util.ArrayList;
 
 
@@ -25,12 +26,15 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
+    //Workshop<Volvo240> = new Workshop<Volvo240>(2, "volvoWorkshop", "Volvo240",);
 
+    //private Loading loader;
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
+
 
 
         cc.cars.add(new Volvo240());
@@ -53,20 +57,28 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             double z = 0;
             for (Car car : cars) {
-                // car.setPoint(car.point.setLocation(z,0));
-
+                /*Point k = new Point(frame.drawPanel.volvoWorkshopPoint.getX(),frame.drawPanel.volvoWorkshopPoint.getX());
+                if (car instanceof Volvo240 && loader.calculateDistance(car.getPoint(), k) < 100) {
+                    frame.drawPanel.moveVolvoToWorkshop(car);
+                }*/
                 car.move();
-                int x = (int) Math.round(car.getPoint().getX());
-                int y = (int) Math.round(car.getPoint().getY());
                 if (car.getPoint().getY() > frame.getHeight() - 300) {
                     car.direction = Car.Direction.SOUTH;
                 } else if (car.getPoint().getY() < 0) {
                     car.direction = Car.Direction.NORTH;
                 }
-                frame.drawPanel.moveit(x, y);
+                if(car.getPoint().getX() > frame.getWidth() -300){
+                    car.direction =  Car.Direction.WEST;
+
+                } else if (car.getPoint().getX() < 0){
+                    car.direction =  Car.Direction.EAST;
+                }
+
+
+                frame.drawPanel.moveit(cars);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
-                //z=z+10;
+
             }
         }
     }
@@ -75,13 +87,7 @@ public class CarController {
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Car car : cars) {
-            if (car instanceof Volvo240 v) {
-                v.gas(gas);
-            } else if (car instanceof Saab95 sa) {
-                sa.gas(gas);
-            } else if (car instanceof Scania sc) {
-               sc.gas(gas);
-            }
+            car.gas(gas);
             // Add additional conditions for other types of cars if needed
         }
     }

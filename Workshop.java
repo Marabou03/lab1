@@ -30,7 +30,7 @@ public class Workshop <T extends Car> {
         System.out.println(this.getClass());*/
         if (carType.isInstance(car)){
             double distance = loader.calculateDistance(car.point, this.point);
-            if (distance < 5){
+            if (distance < 100){
                 currentCars.add(car);
                 car.point = this.point;
             } else{
