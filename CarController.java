@@ -4,11 +4,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-/*
+/**
 * This class represents the Controller part in the MVC pattern.
 * Its responsibilities are to listen to the View and responds in an appropriate manner by
 * modifying the model state and then updating the view.
- */
+**/
+
+
 
 public class CarController {
     // member fields:
@@ -30,9 +32,10 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
+
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
-        //cc.cars.add(new Scania());
+        cc.cars.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -41,9 +44,10 @@ public class CarController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
+/* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
-    * */
+    **/
+
     private class TimerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -71,7 +75,14 @@ public class CarController {
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Car car : cars) {
-            car.gas(gas);
+            if (car instanceof Volvo240 v) {
+                v.gas(gas);
+            } else if (car instanceof Saab95 sa) {
+                sa.gas(gas);
+            } else if (car instanceof Scania sc) {
+               sc.gas(gas);
+            }
+            // Add additional conditions for other types of cars if needed
         }
     }
     void brake(int amount) {
@@ -92,8 +103,7 @@ public class CarController {
     }
     void setTurboOn() {
         for (Car car : cars) {
-            if (car instanceof Saab95 saab) { // Check if the car is a Saab95
-                // Cast the car to Saab95
+            if (car instanceof Saab95 saab) { // Check if the car is a Saab95 and cast car to Saab95
                 saab.setTurboOn(); // Set turbo on for Saab95
             }
         }
@@ -102,8 +112,21 @@ public class CarController {
     void setTurboOff() {
         for (Car car : cars) {
             if (car instanceof Saab95 saab) { // Check if the car is a Saab95
-                // Cast the car to Saab95
                 saab.setTurboOff(); // Set turbo off for Saab95
+            }
+        }
+    }
+    void raiseFlak(int amount) {
+        for (Car car : cars) {
+            if (car instanceof Scania scania) { // Check if the car is a Saab95
+                scania.raiseFlak(amount); // Set turbo off for Saab95
+            }
+        }
+    }
+    void lowerFlak(int amount) {
+        for (Car car : cars) {
+            if (car instanceof Scania scania) { // Check if the car is a Saab95
+                scania.lowerFlak(amount); // Set turbo off for Saab95
             }
         }
     }

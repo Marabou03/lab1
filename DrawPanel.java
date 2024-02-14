@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
+
+
     private ArrayList<BufferedImage> carImages = new ArrayList<>();
     private ArrayList<Point> carPoints = new ArrayList<>();
 
@@ -21,7 +23,7 @@ public class DrawPanel extends JPanel{
     void moveit(int x, int y) {
         for (int i = 0; i < carPoints.size(); i++) {
             Point point = carPoints.get(i);
-            point.x = x + i * 150; // Adjust the x-coordinate based on the index
+            //point.setLocation(x + i * 100, y);  // Adjust the x-coordinate based on the index
             point.y = y;
         }
         repaint(); // Refresh the panel to reflect the changes
