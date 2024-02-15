@@ -29,6 +29,11 @@ public class DrawPanel extends JPanel{
             //System.out.print("car");
         }
     }
+    public void moveVolvoToWorkshop2(int i) {
+                    carImages.remove(i);
+                    carPoints.remove(i);
+    }
+
 
     // TODO: Make this general for all cars
     void moveit(ArrayList<Car> cars) {

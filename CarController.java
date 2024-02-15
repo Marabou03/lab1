@@ -66,27 +66,25 @@ public class CarController {
             return Math.sqrt(posX + posY);
         }
         public void actionPerformed(ActionEvent e) {
-            Iterator<Car> iterator = cars.iterator();
-            while (iterator.hasNext()) {
-                Car car = iterator.next();
+            for(int i = 0; i < cars.size(); i++){
                 Point p = new Point(volvoWorkshop.getPoint().getX(), volvoWorkshop.getPoint().getY());
-                if (car instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
-                    frame.drawPanel.moveVolvoToWorkshop(volvo);
-                    iterator.remove(); // Remove the current car from the list
+                if (cars.get(i) instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
+                    volvoWorkshop.typeCarAllowed(volvo);
+                    frame.drawPanel.moveVolvoToWorkshop2(i);
+                    cars.remove(i);
 
                 }
-                car.move();
-                if (car.getPoint().getY() > frame.getHeight() - 300) {
-                    car.direction = Car.Direction.SOUTH;
-                } else if (car.getPoint().getY() < 0) {
-                    car.direction = Car.Direction.NORTH;
+                cars.get(i).move();
+                if (cars.get(i).getPoint().getY() > frame.getHeight() - 300) {
+                    cars.get(i).direction = Car.Direction.SOUTH;
+                } else if (cars.get(i).getPoint().getY() < 0) {
+                    cars.get(i).direction = Car.Direction.NORTH;
                 }
-                if (car.getPoint().getX() > frame.getWidth() - 300) {
-                    car.direction = Car.Direction.WEST;
-                } else if (car.getPoint().getX() < 0) {
-                    car.direction = Car.Direction.EAST;
-                }
-            }
+                if (cars.get(i).getPoint().getX() > frame.getWidth() - 300) {
+                    cars.get(i).direction = Car.Direction.WEST;
+                } else if (cars.get(i).getPoint().getX() < 0) {
+                    cars.get(i).direction = Car.Direction.EAST;
+                }}
             frame.drawPanel.moveit(cars);
             frame.drawPanel.repaint();
         }

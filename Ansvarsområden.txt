@@ -20,3 +20,6 @@ förbättringar:
 -- Det finns vissa klasser som inte uppfyller SRP t.ex. DrawPanel som har vissa metoder som skulle förbättras genom att flyttas till en
 annan klass eller göra en ny komposition klass.
 --Dela upp loadCar metoden i Truck klassen till mindre metoder för att göra det mer läsbart.
+
+
+--skapa en Factory method?
