@@ -26,7 +26,7 @@ public class DrawPanel extends JPanel{
             CarController.volvoWorkshop.typeCarAllowed(volvo);
             carImages.removeFirst();
             carPoints.removeFirst();
-            System.out.print("car");
+            //System.out.print("car");
         }
     }
 

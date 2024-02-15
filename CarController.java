@@ -47,7 +47,7 @@ public class CarController {
 
 
         for (int i = 0; i < cars.size(); i++ ){
-            cars.get(i).getPoint().setX(i*100);
+            cars.get(i).getPoint().setY(i*100);
         }
 
         // Start a new view and send a reference of self
@@ -66,7 +66,7 @@ public class CarController {
         protected double calculateDistance(Point point1, Point point2) {
             double posX = Math.pow(point1.getX() - point2.getX(), 2);
             double posY = Math.pow(point1.getY() - point2.getY(), 2);
-            System.out.print(Math.sqrt(posX + posY));
+            //System.out.print(Math.sqrt(posX + posY));
             return Math.sqrt(posX + posY);
         }
         public void actionPerformed(ActionEvent e) {
@@ -75,10 +75,9 @@ public class CarController {
                 Car car = iterator.next();
                 Point p = new Point(volvoWorkshop.getPoint().getX(), volvoWorkshop.getPoint().getY());
                 if (car instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
-                    volvoWorkshop.typeCarAllowed(volvo);
-                    //System.out.println(iterator.toString());
+                    frame.drawPanel.moveVolvoToWorkshop(volvo);
                     iterator.remove(); // Remove the current car from the list
-                    System.out.println(iterator.next());
+
                 }
                 car.move();
                 if (car.getPoint().getY() > frame.getHeight() - 300) {

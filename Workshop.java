@@ -33,7 +33,7 @@ public class Workshop <T extends Car> {
             if (distance < 500){
                 currentCars.add(car);
                 car.point = this.point;
-                System.out.print(currentCars);
+                //System.out.print(currentCars);
             } else{
                 throw new IllegalArgumentException("Car is too far away");
             }
