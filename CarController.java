@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.ConvolveOp;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -26,7 +27,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     static ArrayList<Car> cars = new ArrayList<>();
-    //Workshop<Volvo240> = new Workshop<Volvo240>(2, "volvoWorkshop", "Volvo240",);
+    protected static Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
 
     //private Loading loader;
     //methods:
@@ -38,11 +39,12 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-
+        volvoWorkshop.getPoint().setLocation(0, 300);
 
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
+
 
         for (int i = 0; i < cars.size(); i++ ){
             cars.get(i).getPoint().setX(i*100);
@@ -61,32 +63,37 @@ public class CarController {
 
     private class TimerListener implements ActionListener {
 
+        protected double calculateDistance(Point point1, Point point2) {
+            double posX = Math.pow(point1.getX() - point2.getX(), 2);
+            double posY = Math.pow(point1.getY() - point2.getY(), 2);
+            System.out.print(Math.sqrt(posX + posY));
+            return Math.sqrt(posX + posY);
+        }
         public void actionPerformed(ActionEvent e) {
-            double z = 0;
-            for (Car car : cars) {
-                /*Point k = new Point(frame.drawPanel.volvoWorkshopPoint.getX(),frame.drawPanel.volvoWorkshopPoint.getX());
-                if (car instanceof Volvo240 && loader.calculateDistance(car.getPoint(), k) < 100) {
-                    frame.drawPanel.moveVolvoToWorkshop(car);
-                }*/
+            Iterator<Car> iterator = cars.iterator();
+            while (iterator.hasNext()) {
+                Car car = iterator.next();
+                Point p = new Point(volvoWorkshop.getPoint().getX(), volvoWorkshop.getPoint().getY());
+                if (car instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
+                    volvoWorkshop.typeCarAllowed(volvo);
+                    //System.out.println(iterator.toString());
+                    iterator.remove(); // Remove the current car from the list
+                    System.out.println(iterator.next());
+                }
                 car.move();
                 if (car.getPoint().getY() > frame.getHeight() - 300) {
                     car.direction = Car.Direction.SOUTH;
                 } else if (car.getPoint().getY() < 0) {
                     car.direction = Car.Direction.NORTH;
                 }
-                if(car.getPoint().getX() > frame.getWidth() -300){
-                    car.direction =  Car.Direction.WEST;
-
-                } else if (car.getPoint().getX() < 0){
-                    car.direction =  Car.Direction.EAST;
+                if (car.getPoint().getX() > frame.getWidth() - 300) {
+                    car.direction = Car.Direction.WEST;
+                } else if (car.getPoint().getX() < 0) {
+                    car.direction = Car.Direction.EAST;
                 }
-
-
-                frame.drawPanel.moveit(cars);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-
             }
+            frame.drawPanel.moveit(cars);
+            frame.drawPanel.repaint();
         }
     }
 
