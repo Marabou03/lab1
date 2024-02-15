@@ -15,8 +15,8 @@ Point finns för att identifiera en point som en bil kan ha x och y värden som 
 
 förbättringar:
 
--- skapa en tuple klass som tar in alla typer av Cars, bildpositionen och bilden för dem bilarna som läggs in.
+-- skapa en tuple klass som tar in alla sorters Cars, bildpositionen och bilden för dem bilarna som läggs in.
 -- Enligt SRP försöker man att få klasserna att utföra en uppgift exempel på det kan vara att Car klassen bygger en Car.
 -- Det finns vissa klasser som inte uppfyller SRP t.ex. DrawPanel som har vissa metoder som skulle förbättras genom att flyttas till en
 annan klass eller göra en ny komposition klass.
---
+--Dela upp loadCar metoden i Truck klassen till mindre metoder för att göra det mer läsbart.
