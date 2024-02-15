@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ConvolveOp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,9 +31,7 @@ public class CarController {
     //private Loading loader;
     //methods:
 
-    public ArrayList<Car> getCars() {
-        return cars;
-    }
+
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
@@ -66,7 +63,6 @@ public class CarController {
         protected double calculateDistance(Point point1, Point point2) {
             double posX = Math.pow(point1.getX() - point2.getX(), 2);
             double posY = Math.pow(point1.getY() - point2.getY(), 2);
-            //System.out.print(Math.sqrt(posX + posY));
             return Math.sqrt(posX + posY);
         }
         public void actionPerformed(ActionEvent e) {
