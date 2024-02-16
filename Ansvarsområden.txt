@@ -1,14 +1,23 @@
-Car Klassen jobb är att inte initiera utan skapa en "bluprint" för hur en bil ska se ut,
+Car Klassens jobb är att inte initiera utan skapa en "bluprint" för hur en bil ska se ut,
 detta använder sig Saab95, Volvo240, Scania och Truck för att att då kunna skapa en ny model av typen Car
-med ny metoder och eventuelt modifierade metoder vid behov.
+med nya metoder och eventuelt modifierade metoder vid behov.
 
 CarTest existerar för att kolla så att alla metoder och klasser gör det som dem ska.
 
-Loading är en hjälp klass där hjälpfunktioner kan skrivas som används på mer en class.
+Loading är en hjälp klass där hjälpfunktioner kan skrivas, som används på mer än en class.
 
 Point finns för att identifiera en point som en bil kan ha x och y värden som är double värden och inte bara int värden.
 
+Workshop klassens jobb är att initiera en workshop som antingen tar in vilken typ av bil som helst eller endast
+tar in en specifik typ av bil.
 
+CarController
+
+CarView ansvarar för att skapa ett fönster när man startar CarController proprammet, skapa knappar till programmet och
+sedan kopplar knapparna till rätt metoder för att se till att de gör rätt när man klickar på dem.
+
+DrawPanel ansvarar för att hålla koll vart de olika Car objekten befinner sig på fönstret och uppdaterar bildernas
+positioner så att de stämmer med det faktiska objektets position.
 
 
 
