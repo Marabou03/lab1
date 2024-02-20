@@ -94,12 +94,16 @@ public abstract class Car implements Movable{
 
     protected void startEngine(){
         engineOn = true;
+        currentSpeed = 0.1;
     }
 
-    protected void stopEngine(){ engineOn = false; currentSpeed = 0; }
+    protected void stopEngine(){
+        engineOn = false;
+        currentSpeed = 0;
+    }
 
     protected double speedFactor(){
-        return 0;
+        return 0.5;
     }
 
     protected void incrementSpeed(double amount){

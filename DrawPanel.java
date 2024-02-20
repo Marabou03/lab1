@@ -11,19 +11,33 @@ import java.util.ArrayList;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
-    private ArrayList<BufferedImage> carImages = new ArrayList<>();
-    private ArrayList<Point> carPoints = new ArrayList<>();
+    ArrayList<BufferedImage> carImages = new ArrayList<>();
+    ArrayList<Point> carPoints = new ArrayList<>();
 
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
+    Point volvoWorkshopPoint = new Point(0,300);
+
+    // List to store Volvo cars in the workshop
+    //private Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
+
+    // Method to move Volvo cars to the workshop
+
+    public void moveVolvoToWorkshop(int i) {
+        carImages.remove(i);
+        carPoints.remove(i);
+    }
+
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y) {
-        for (int i = 0; i < carPoints.size(); i++) {
-            Point point = carPoints.get(i);
-            point.x = x + i * 150; // Adjust the x-coordinate based on the index
-            point.y = y;
+    void moveit(ArrayList<Car> cars) {
+        for(int i = 0; i < cars.size(); i++){
+            int p = (int) cars.get(i).getPoint().getX();
+            int q = (int) cars.get(i).getPoint().getY();
+            Point k = new Point(p,q);
+            carPoints.set(i,k);
         }
+
+
         repaint(); // Refresh the panel to reflect the changes
     }
 
@@ -38,14 +52,18 @@ public class DrawPanel extends JPanel{
             carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
             carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
 
+
             volvoWorkshopImage  = (ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg")));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         // Set initial positions for cars
         carPoints.add(new Point(0, 0)); // Volvo
-        carPoints.add(new Point(200, 0)); // Saab
-        carPoints.add(new Point(400, 0)); // Scania
+        carPoints.add(new Point(0, 200)); // Saab
+        carPoints.add(new Point(0, 400)); // Scania
+
+        //Point p = new Point(volvoWorkshopPoint.getX(),volvoWorkshopPoint.getX());
+        //CarController.volvoWorkshop.getPoint() = p;
 
     }
 

@@ -4,11 +4,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-/*
+
+/**
 * This class represents the Controller part in the MVC pattern.
 * Its responsibilities are to listen to the View and responds in an appropriate manner by
 * modifying the model state and then updating the view.
- */
+**/
+
+
 
 public class CarController {
     // member fields:
@@ -22,17 +25,27 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
+    static ArrayList<Car> cars = new ArrayList<>();
+    protected static Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
 
+    //private Loading loader;
     //methods:
+
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
 
+        volvoWorkshop.getPoint().setLocation(0, 300);
+
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
-        //cc.cars.add(new Scania());
+        cc.cars.add(new Scania());
+
+
+        for (int i = 0; i < cars.size(); i++ ){
+            cars.get(i).getPoint().setY(i*100);
+        }
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -41,38 +54,48 @@ public class CarController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
+/* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
-    * */
+    **/
+
     private class TimerListener implements ActionListener {
 
+        protected double calculateDistance(Point point1, Point point2) {
+            double posX = Math.pow(point1.getX() - point2.getX(), 2);
+            double posY = Math.pow(point1.getY() - point2.getY(), 2);
+            return Math.sqrt(posX + posY);
+        }
         public void actionPerformed(ActionEvent e) {
-            double z = 0;
-            for (Car car : cars) {
-                // car.setPoint(car.point.setLocation(z,0));
+            for(int i = 0; i < cars.size(); i++){
+                Point p = new Point(volvoWorkshop.getPoint().getX(), volvoWorkshop.getPoint().getY());
+                if (cars.get(i) instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
+                    volvoWorkshop.typeCarAllowed(volvo);
+                    frame.drawPanel.moveVolvoToWorkshop(i);
+                    cars.remove(i);
 
-                car.move();
-                int x = (int) Math.round(car.getPoint().getX());
-                int y = (int) Math.round(car.getPoint().getY());
-                if (car.getPoint().getY() > frame.getHeight() - 300) {
-                    car.direction = Car.Direction.SOUTH;
-                } else if (car.getPoint().getY() < 0) {
-                    car.direction = Car.Direction.NORTH;
                 }
-                frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-                //z=z+10;
-            }
+                cars.get(i).move();
+                if (cars.get(i).getPoint().getY() > frame.getHeight() - 300) {
+                    cars.get(i).direction = Car.Direction.SOUTH;
+                } else if (cars.get(i).getPoint().getY() < 0) {
+                    cars.get(i).direction = Car.Direction.NORTH;
+                }
+                if (cars.get(i).getPoint().getX() > frame.getWidth() - 300) {
+                    cars.get(i).direction = Car.Direction.WEST;
+                } else if (cars.get(i).getPoint().getX() < 0) {
+                    cars.get(i).direction = Car.Direction.EAST;
+                }}
+            frame.drawPanel.moveit(cars);
+            frame.drawPanel.repaint();
         }
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Car car : cars
-                ) {
+        for (Car car : cars) {
             car.gas(gas);
+            // Add additional conditions for other types of cars if needed
         }
     }
     void brake(int amount) {
@@ -93,8 +116,7 @@ public class CarController {
     }
     void setTurboOn() {
         for (Car car : cars) {
-            if (car instanceof Saab95 saab) { // Check if the car is a Saab95
-                // Cast the car to Saab95
+            if (car instanceof Saab95 saab) { // Check if the car is a Saab95 and cast car to Saab95
                 saab.setTurboOn(); // Set turbo on for Saab95
             }
         }
@@ -103,8 +125,23 @@ public class CarController {
     void setTurboOff() {
         for (Car car : cars) {
             if (car instanceof Saab95 saab) { // Check if the car is a Saab95
-                // Cast the car to Saab95
                 saab.setTurboOff(); // Set turbo off for Saab95
+            }
+        }
+    }
+    void raiseFlak(int amount) {
+        double raise = ((double) amount) / 100;
+        for (Car car : cars) {
+            if (car instanceof Scania scania) {
+                scania.raiseFlak(raise);
+            }
+        }
+    }
+    void lowerFlak(int amount) {
+        double lower = ((double) amount) / 100;
+        for (Car car : cars) {
+            if (car instanceof Scania scania) {
+                scania.lowerFlak(lower);
             }
         }
     }
