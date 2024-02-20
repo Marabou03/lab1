@@ -14,7 +14,7 @@ public class CarFactory {
         carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public static CarRelatedData<BufferedImage, Point, Car> createCar(String carType) {
+    public void createCar(String carType) {
         Car car;
         switch (carType.toLowerCase()) {
             case "volvo240":
@@ -42,8 +42,6 @@ public class CarFactory {
             default:
                 throw new IllegalArgumentException("Invalid car type: " + carType);
         }
-
-        return carData;
     }
 
     /*public static Truck createTruck(int nrDoors, double enginePower, Color color, String name, int maxCars, String vehicleType) {
@@ -53,7 +51,7 @@ public class CarFactory {
         return truck;
     }*/
 
-    public static CarRelatedData<BufferedImage, Point, Car> createScania() {
+    public void createScania() {
         Scania scania = new Scania();
         try {
             BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Scania.jpg"));
@@ -63,6 +61,5 @@ public class CarFactory {
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
-        return carData;
     }
 }

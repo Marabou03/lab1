@@ -9,7 +9,7 @@ public class WorkShopfactory {
     public WorkShopfactory(){
     this.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
-    protected WorkShopRelatedData<BufferedImage, Point, Workshop<?>> volvo240WorkShop(int maxCars, String name){
+    protected void volvo240WorkShop(int maxCars, String name){
         try{
             Workshop<Volvo240> volvoWorkShop = new Workshop<>(maxCars, name, Volvo240.class);
             BufferedImage workShopImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
@@ -20,8 +20,6 @@ public class WorkShopfactory {
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        return workShopData;
     }
     /*protected Workshop<Saab95> saab95oWorkShop(int maxCars, String name){
         return new Workshop<>(maxCars, name, Saab95.class);
