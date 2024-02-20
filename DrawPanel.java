@@ -21,17 +21,10 @@ public class DrawPanel extends JPanel{
     //private Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
 
     // Method to move Volvo cars to the workshop
-    public void moveVolvoToWorkshop(Car car) {
-        if (car instanceof Volvo240 volvo) {
-            CarController.volvoWorkshop.typeCarAllowed(volvo);
-            carImages.removeFirst();
-            carPoints.removeFirst();
-            //System.out.print("car");
-        }
-    }
-    public void moveVolvoToWorkshop2(int i) {
-                    carImages.remove(i);
-                    carPoints.remove(i);
+
+    public void moveVolvoToWorkshop(int i) {
+        carImages.remove(i);
+        carPoints.remove(i);
     }
 
 

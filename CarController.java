@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 
 /**
@@ -70,7 +70,7 @@ public class CarController {
                 Point p = new Point(volvoWorkshop.getPoint().getX(), volvoWorkshop.getPoint().getY());
                 if (cars.get(i) instanceof Volvo240 volvo && calculateDistance(volvo.getPoint(), p) < 10) {
                     volvoWorkshop.typeCarAllowed(volvo);
-                    frame.drawPanel.moveVolvoToWorkshop2(i);
+                    frame.drawPanel.moveVolvoToWorkshop(i);
                     cars.remove(i);
 
                 }
@@ -130,16 +130,18 @@ public class CarController {
         }
     }
     void raiseFlak(int amount) {
+        double raise = ((double) amount) / 100;
         for (Car car : cars) {
-            if (car instanceof Scania scania) { // Check if the car is a Saab95
-                scania.raiseFlak(amount); // Set turbo off for Saab95
+            if (car instanceof Scania scania) {
+                scania.raiseFlak(raise);
             }
         }
     }
     void lowerFlak(int amount) {
+        double lower = ((double) amount) / 100;
         for (Car car : cars) {
-            if (car instanceof Scania scania) { // Check if the car is a Saab95
-                scania.lowerFlak(amount); // Set turbo off for Saab95
+            if (car instanceof Scania scania) {
+                scania.lowerFlak(lower);
             }
         }
     }

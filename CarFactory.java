@@ -20,7 +20,7 @@ public class CarFactory {
             case "volvo240":
                 try {
                     car = new Volvo240();
-                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Scania.jpg"));
+                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Volvo240.jpg"));
                     Point truckImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
                     carData.add(truckImage, truckImagePoint, car);
@@ -31,7 +31,7 @@ public class CarFactory {
             case "saab95":
                 try {
                     car = new Saab95();
-                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Scania.jpg"));
+                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Saab95.jpg"));
                     Point truckImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
                     carData.add(truckImage, truckImagePoint, car);
