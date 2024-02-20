@@ -10,25 +10,22 @@ import java.util.ArrayList;
 
 public class DrawPanel extends JPanel{
 
-    // Just a single image, TODO: Generalize
+
     ArrayList<BufferedImage> carImages = new ArrayList<>();
     ArrayList<Point> carPoints = new ArrayList<>();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0,300);
 
-    // List to store Volvo cars in the workshop
-    //private Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
 
     // Method to move Volvo cars to the workshop
-
     public void moveVolvoToWorkshop(int i) {
         carImages.remove(i);
         carPoints.remove(i);
     }
 
 
-    // TODO: Make this general for all cars
+
     void moveit(ArrayList<Car> cars) {
         for(int i = 0; i < cars.size(); i++){
             int p = (int) cars.get(i).getPoint().getX();
@@ -68,7 +65,6 @@ public class DrawPanel extends JPanel{
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

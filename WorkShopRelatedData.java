@@ -7,7 +7,7 @@ public class WorkShopRelatedData<T1 extends BufferedImage, T2 extends Point, T3 
     private final ArrayList<T2> WorkShopImagesPoints ;
     private final ArrayList<T3> WorkshopsList;
 
-    protected WorkShopRelatedData(ArrayList<T1> workShopImages, ArrayList<T2> WorkShopImagesPoints, ArrayList<T3> WorkshopsList) {
+    public WorkShopRelatedData(ArrayList<T1> workShopImages, ArrayList<T2> WorkShopImagesPoints, ArrayList<T3> WorkshopsList) {
         this.workShopImages = workShopImages;
         this.WorkShopImagesPoints  = WorkShopImagesPoints ;
         this.WorkshopsList = WorkshopsList;

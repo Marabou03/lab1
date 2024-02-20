@@ -4,18 +4,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WorkShopfactory {
+public class WorkShopFactory {
     private static WorkShopRelatedData<BufferedImage, Point, Workshop<?>> workShopData;
-    public WorkShopfactory(){
+    public WorkShopFactory(){
     this.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
-    protected void volvo240WorkShop(int maxCars, String name){
+    protected void volvo240WorkShop(int maxCars, String name, WorkShopRelatedData WRD){
         try{
             Workshop<Volvo240> volvoWorkShop = new Workshop<>(maxCars, name, Volvo240.class);
             BufferedImage workShopImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
             Point workShopImagePoint = new Point(0, 0);
             // Add the created car to CarRelatedData
-            workShopData.add(workShopImage, workShopImagePoint, volvoWorkShop);
+            WRD.add(workShopImage, workShopImagePoint, volvoWorkShop);
 
         }catch (IOException e){
             e.printStackTrace();
