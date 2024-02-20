@@ -1,0 +1,36 @@
+Car Klassens jobb är att inte initiera utan skapa en "bluprint" för hur en bil ska se ut,
+detta använder sig Saab95, Volvo240, Scania och Truck för att att då kunna skapa en ny model av typen Car
+med nya metoder och eventuelt modifierade metoder vid behov.
+
+CarTest existerar för att kolla så att alla metoder och klasser gör det som dem ska.
+
+Loading är en hjälp klass där hjälpfunktioner kan skrivas, som används på mer än en class.
+
+Point finns för att identifiera en point som en bil kan ha x och y värden som är double värden och inte bara int värden.
+
+Workshop klassens jobb är att initiera en workshop som antingen tar in vilken typ av bil som helst eller endast
+tar in en specifik typ av bil.
+
+CarController har alla metoder som används av Carview.
+
+CarView ansvarar för att skapa ett fönster när man startar CarController proprammet, skapa knappar till programmet och
+sedan kopplar knapparna till rätt metoder för att se till att de gör rätt när man klickar på dem.
+
+DrawPanel ansvarar för att hålla koll vart de olika Car objekten befinner sig på fönstret och uppdaterar bildernas
+positioner så att de stämmer med det faktiska objektets position.
+
+
+
+
+förbättringar:
+
+-- skapa en tuple klass som tar in alla sorters Cars, bildpositionen och bilden för dem bilarna som läggs in.
+-- Enligt SRP försöker man att få klasserna att utföra en uppgift exempel på det kan vara att Car klassen bygger en Car.
+   Det finns vissa klasser som inte uppfyller SRP t.ex. DrawPanel som har vissa metoder som skulle förbättras genom att flyttas till en
+   annan klass eller göra en ny komposition klass.
+-- Dela upp loadCar metoden i Truck klassen till mindre metoder för att göra det mer läsbart.
+-- Använda mer komposition för att utöka skalabiliteten. t.ex göra en kompositions av turbo istället för en method
+   för endast saab95.
+--
+
+-- skapa en Factory method för bilar och workshops.
