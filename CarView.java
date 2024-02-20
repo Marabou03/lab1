@@ -2,15 +2,17 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
  * It initializes with being center on the screen and attaching it's controller in it's state.
  * It communicates with the Controller by calling methods of it when an action fires of in
- * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
+ * each of its components.
  **/
 
 
@@ -19,7 +21,8 @@ public class CarView extends JFrame{
     private static final int Y = 800;
 
     // The controller member
-    CarController carC;
+    CarRelatedData<BufferedImage, Point, Car> carC;
+
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -41,13 +44,13 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
+    public CarView(String framename, CarRelatedData<BufferedImage, Point, Car> carC){
+        this.carC = carC;
         initComponents(framename);
     }
 
     // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
+
     private void initComponents(String title) {
 
         this.setTitle(title);
@@ -105,52 +108,77 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                for (Car car : carC.getCarsList()) {
+                    car.gas(gasAmount);
+                }
             }
         });
+
 
         brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.brake(gasAmount);
+                for (Car car : carC.getCarsList()) {
+                    car.brake(gasAmount);
+                }
             }
         });
 
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.startEngine();
+                for (Car car : carC.getCarsList()) {
+                    car.startEngine();
+                }
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.stopEngine();
+                for (Car car : carC.getCarsList()) {
+                    car.stopEngine();
+                }
             }
         });
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.setTurboOn();
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Saab95 saab){
+                        saab.setTurboOn();
+                    }
+                }
             }
         });
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.setTurboOff();
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Saab95 saab){
+                        saab.setTurboOn();
+                    }
+                }
             }
         });
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.raiseFlak(gasAmount);
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Scania Scania){
+                        Scania.raiseFlak(gasAmount);
+                    }
+                }
             }
         });
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.lowerFlak(gasAmount);
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Scania Scania){
+                        Scania.lowerFlak(gasAmount);
+                    }
+                }
             }
         });
 
