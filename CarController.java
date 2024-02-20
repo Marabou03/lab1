@@ -19,9 +19,9 @@ public class CarController {
 
     private static CarFactory carFactory;
 
-    /*public CarController() {
+    public CarController() {
         this.carFactory = new CarFactory();
-        this.workShopFactory = new WorkShopFactory();*/
+        }
 /*        this.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         this.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         // Initialize other member fields as needed...
@@ -43,7 +43,7 @@ public class CarController {
 
 
     public static void main(String[] args) {
-        MiddleGround.carFactory = new CarFactory();
+
 
         // Initialize car data
         MiddleGround.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
@@ -54,8 +54,13 @@ public class CarController {
 
         carFactory.createCar("Volvo240", MiddleGround.carData);
         carFactory.createCar("Saab95", MiddleGround.carData);
-        carFactory.createCar("Volvo240", MiddleGround.carData);
+        carFactory.createCar("Saab95", MiddleGround.carData);
+        carFactory.createScania(MiddleGround.carData);
 
+        for(int i = 0;i < MiddleGround.carData.getCarsList().size(); i++){
+            MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*100, 0);
+
+        }
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", MiddleGround.carData);

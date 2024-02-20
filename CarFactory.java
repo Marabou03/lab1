@@ -51,13 +51,13 @@ public class CarFactory {
         return truck;
     }*/
 
-    public void createScania() {
+    public void createScania(CarRelatedData CRD) {
         Scania scania = new Scania();
         try {
             BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Scania.jpg"));
             Point truckImagePoint = new Point(0, 0);
             // Add the created car to CarRelatedData
-            carData.add(truckImage, truckImagePoint, scania);
+            CRD.add(truckImage, truckImagePoint, scania);
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
