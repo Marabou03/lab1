@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class DrawPanel extends JPanel{
 
 
-    /*ArrayList<BufferedImage> carImages = new ArrayList<>();
-    ArrayList<Point> carPoints = new ArrayList<>();*/
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0,300);
@@ -22,6 +20,9 @@ public class DrawPanel extends JPanel{
     public void moveVolvoToWorkshop(int i) {
         MiddleGround.carData.getCarImages().remove(i);
         MiddleGround.carData.getCarImagesPoints().remove(i);
+        System.out.println(MiddleGround.carData.getCarImagesPoints().toString());
+        System.out.println(CarController.volvoWorkshop.getPoint().toString());
+
     }
 
     void moveit(ArrayList<Car> cars) {
@@ -30,6 +31,8 @@ public class DrawPanel extends JPanel{
             int q = (int) cars.get(i).getPoint().getY();
             Point k = new Point(p,q);
             MiddleGround.carData.getCarImagesPoints().set(i,k);
+            //System.out.println(MiddleGround.carData.getCarImagesPoints());
+            System.out.println(CarController.volvoWorkshop.getPoint().toString());
         }
 
 
@@ -42,22 +45,15 @@ public class DrawPanel extends JPanel{
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
 
-        try {// Load car images
-            /*carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));*/
-
-
+        try {
             volvoWorkshopImage  = (ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg")));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        /*// Set initial positions for cars
-        carPoints.add(new Point(0, 0)); // Volvo
-        carPoints.add(new Point(0, 200)); // Saab
-        carPoints.add(new Point(0, 400)); // Scania*/
 
-        CarController.volvoWorkshop.getPoint().setLocation(volvoWorkshopPoint.getX(),volvoWorkshopPoint.getX());
+        double x1 =volvoWorkshopPoint.getX();
+        double y1 =volvoWorkshopPoint.getY();
+        CarController.volvoWorkshop.getPoint().setLocation(x1,y1);
 
     }
 

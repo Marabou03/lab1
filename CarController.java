@@ -54,11 +54,12 @@ public class CarController {
 
         carFactory.createCar("Volvo240", MiddleGround.carData);
         carFactory.createCar("Saab95", MiddleGround.carData);
+        carFactory.createCar("Volvo240", MiddleGround.carData);
         carFactory.createCar("Saab95", MiddleGround.carData);
         carFactory.createScania(MiddleGround.carData);
 
         for(int i = 0;i < MiddleGround.carData.getCarsList().size(); i++){
-            MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*100, 0);
+            MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*150, 0);
 
         }
 
@@ -100,7 +101,7 @@ public class CarController {
                 } else if (k.getPoint().getY() < 0) {
                     k.direction = Car.Direction.NORTH;
                 }
-                if (k.getPoint().getX() > frame.getWidth() - 300) {
+                if (k.getPoint().getX() > frame.getWidth()) {
                     k.direction = Car.Direction.WEST;
                 } else if (k.getPoint().getX() < 0) {
                     k.direction = Car.Direction.EAST;
