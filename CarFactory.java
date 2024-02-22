@@ -7,13 +7,6 @@ import java.util.ArrayList;
 
 
 public class CarFactory {
-    private  CarRelatedData<BufferedImage, Point, Car> carData;
-
-    // Initialize CarRelatedData
-    public void initializeCarData() {
-        this.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-    }
-
     public void createCar(String carType, CarRelatedData CRD) {
         Car car;
         switch (carType.toLowerCase()) {

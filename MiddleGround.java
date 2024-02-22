@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MiddleGround {
     protected static CarFactory carFactory;
     protected static WorkShopFactory workShopFactory;
-    protected static WorkShopRelatedData<BufferedImage, Point, Workshop<?>> workShopData;
+    protected static WorkShopRelatedData<BufferedImage, Point, Workshop<Car>, Car> workShopData;
     protected static CarRelatedData<BufferedImage, Point, Car> carData;
     public MiddleGround(){
         this.carFactory = new CarFactory();

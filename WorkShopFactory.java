@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorkShopFactory {
-    private static WorkShopRelatedData<BufferedImage, Point, Workshop<?>> workShopData;
+
     public WorkShopFactory(){
-    this.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
     }
     protected void volvo240WorkShop(int maxCars, String name, WorkShopRelatedData WRD){
         try{

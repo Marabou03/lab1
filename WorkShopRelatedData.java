@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class WorkShopRelatedData<T1 extends BufferedImage, T2 extends Point, T3 extends Workshop<? extends Car>> {
+public class WorkShopRelatedData<T1 extends BufferedImage, T2 extends Point, T3 extends Workshop<T4>, T4 extends Car> {
     private final ArrayList<T1> workShopImages;
     private final ArrayList<T2> WorkShopImagesPoints ;
     private final ArrayList<T3> WorkshopsList;

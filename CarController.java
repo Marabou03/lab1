@@ -18,14 +18,12 @@ import java.util.ArrayList;
 public class CarController {
 
     private static CarFactory carFactory;
+    private static WorkShopFactory workShopFactory;
 
     public CarController() {
         this.carFactory = new CarFactory();
+        this.workShopFactory = new WorkShopFactory();
         }
-/*        this.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        this.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        // Initialize other member fields as needed...
-    }*/
 
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -35,8 +33,8 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    //static ArrayList<Car> cars = new ArrayList<>();
-    protected static Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
+
+    //protected static Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, "volvoWorkshop", Volvo240.class);
 
     //private Loading loader;
     //methods:
@@ -44,9 +42,6 @@ public class CarController {
 
     public static void main(String[] args) {
 
-
-        // Initialize car data
-        MiddleGround.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
 
         // Instance of this class
@@ -58,8 +53,14 @@ public class CarController {
         carFactory.createCar("Saab95", MiddleGround.carData);
         carFactory.createScania(MiddleGround.carData);
 
+        workShopFactory.volvo240WorkShop(5, "hi", MiddleGround.workShopData);
+
         for(int i = 0;i < MiddleGround.carData.getCarsList().size(); i++){
             MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*150, 0);
+
+        }
+        for(int i = 0;i < MiddleGround.workShopData.getWorkshopsList().size(); i++){
+            MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().setLocation(i*150, i*10 + 300);
 
         }
 
@@ -84,16 +85,18 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for(int i = 0; i < MiddleGround.carData.getCarsList().size(); i++){
                 Car k = MiddleGround.carData.getCarsList().get(i);
-                Point p = new Point((int)volvoWorkshop.getPoint().getX(), (int) volvoWorkshop.getPoint().getY());
+                double x = MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().getX();
+                double y = MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().getY();
+                Point p = new Point((int)x, (int) y);
                 Point o = new Point((int)k.getPoint().getX(), (int) k.getPoint().getY());
-
-                if (k instanceof Volvo240 volvo && calculateDistance(o, p) < 10) {
-                    volvoWorkshop.typeCarAllowed(volvo);
-                    frame.drawPanel.moveVolvoToWorkshop(i);
-                    MiddleGround.carData.getCarsList().remove(i);
-
-                }
-
+                for(int j = 0; j < MiddleGround.carData.getCarsList().size(); j++){
+                    if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
+                        MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(v);
+                        frame.drawPanel.moveVolvoToWorkshop(j);
+                        MiddleGround.carData.getCarsList().remove(i);
+                        i--;
+                    }
+                }// switch för varje  combination av Car dess workShop
 
                 k.move();
                 if (k.getPoint().getY() > frame.getHeight() - 300) {
