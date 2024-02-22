@@ -30,4 +30,9 @@ public class Point {
         point.y += dy;
     }
 
+
+    public String toString() {
+        return "Point(" + x + ", " + y + ")";
+    }
+
 }

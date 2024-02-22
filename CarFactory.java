@@ -7,23 +7,23 @@ import java.util.ArrayList;
 
 
 public class CarFactory {
-    private static CarRelatedData<BufferedImage, Point, Car> carData;
+    private  CarRelatedData<BufferedImage, Point, Car> carData;
 
     // Initialize CarRelatedData
-    public static void initializeCarData() {
-        carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    public void initializeCarData() {
+        this.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public void createCar(String carType) {
+    public void createCar(String carType, CarRelatedData CRD) {
         Car car;
         switch (carType.toLowerCase()) {
             case "volvo240":
                 try {
                     car = new Volvo240();
-                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Volvo240.jpg"));
-                    Point truckImagePoint = new Point(0, 0);
+                    BufferedImage volvoImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Volvo240.jpg"));
+                    Point volvoImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
-                    carData.add(truckImage, truckImagePoint, car);
+                    CRD.add(volvoImage, volvoImagePoint, car);
                 } catch (IOException e) {
                     e.printStackTrace(); // Handle the exception appropriately
                 }
@@ -31,10 +31,10 @@ public class CarFactory {
             case "saab95":
                 try {
                     car = new Saab95();
-                    BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Saab95.jpg"));
-                    Point truckImagePoint = new Point(0, 0);
+                    BufferedImage saabImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Saab95.jpg"));
+                    Point saabImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
-                    carData.add(truckImage, truckImagePoint, car);
+                    CRD.add(saabImage, saabImagePoint, car);
                 } catch (IOException e) {
                     e.printStackTrace(); // Handle the exception appropriately
                 }
@@ -51,13 +51,13 @@ public class CarFactory {
         return truck;
     }*/
 
-    public void createScania() {
+    public void createScania(CarRelatedData CRD) {
         Scania scania = new Scania();
         try {
             BufferedImage truckImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/Scania.jpg"));
             Point truckImagePoint = new Point(0, 0);
             // Add the created car to CarRelatedData
-            carData.add(truckImage, truckImagePoint, scania);
+            CRD.add(truckImage, truckImagePoint, scania);
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
