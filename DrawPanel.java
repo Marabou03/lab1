@@ -40,6 +40,8 @@ public class DrawPanel extends JPanel{
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
 
+
+
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself

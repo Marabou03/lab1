@@ -21,11 +21,11 @@ public class CarController {
     private static WorkShopFactory workShopFactory;
 
     public CarController() {
-        this.carFactory = new CarFactory();
-        this.workShopFactory = new WorkShopFactory();
+        carFactory = new CarFactory();
+        workShopFactory = new WorkShopFactory();
         }
 
-    private final int delay = 50;
+    private final int delay = 1;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
@@ -42,7 +42,8 @@ public class CarController {
 
     public static void main(String[] args) {
 
-
+        MiddleGround.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        MiddleGround.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         // Instance of this class
         CarController cc = new CarController();
@@ -60,7 +61,8 @@ public class CarController {
 
         }
         for(int i = 0;i < MiddleGround.workShopData.getWorkshopsList().size(); i++){
-            MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().setLocation(i*150, i*10 + 300);
+            MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().setLocation(i*150, 300 + i*10);
+            MiddleGround.workShopData.getWorkShopImagesPoints().get(i).setLocation(i*150, 300 + i*10);
 
         }
 
@@ -83,20 +85,19 @@ public class CarController {
             return Math.sqrt(posX + posY);
         }
         public void actionPerformed(ActionEvent e) {
-            for(int i = 0; i < MiddleGround.carData.getCarsList().size(); i++){
+            for (int i = 0; i < MiddleGround.carData.getCarsList().size(); i++) {
                 Car k = MiddleGround.carData.getCarsList().get(i);
-                double x = MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().getX();
-                double y = MiddleGround.workShopData.getWorkshopsList().get(i).getPoint().getY();
-                Point p = new Point((int)x, (int) y);
-                Point o = new Point((int)k.getPoint().getX(), (int) k.getPoint().getY());
-                for(int j = 0; j < MiddleGround.carData.getCarsList().size(); j++){
-                    if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
-                        MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(v);
-                        frame.drawPanel.moveVolvoToWorkshop(j);
-                        MiddleGround.carData.getCarsList().remove(i);
-                        i--;
-                    }
-                }// switch för varje  combination av Car dess workShop
+                double x = MiddleGround.workShopData.getWorkshopsList().get(0).getPoint().getX();
+                double y = MiddleGround.workShopData.getWorkshopsList().get(0).getPoint().getY();
+                Point p = new Point((int) x, (int) y);
+                Point o = new Point((int) k.getPoint().getX(), (int) k.getPoint().getY());
+                if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
+                    MiddleGround.workShopData.getWorkshopsList().get(0).typeCarAllowed(v);
+                    frame.drawPanel.moveVolvoToWorkshop(0);
+                    MiddleGround.carData.getCarsList().remove(i);
+                    i--;
+                }
+                // switch för varje  combination av Car dess workShop
 
                 k.move();
                 if (k.getPoint().getY() > frame.getHeight() - 300) {
@@ -108,11 +109,11 @@ public class CarController {
                     k.direction = Car.Direction.WEST;
                 } else if (k.getPoint().getX() < 0) {
                     k.direction = Car.Direction.EAST;
-                }}
-            frame.drawPanel.moveit(MiddleGround.carData.getCarsList());
-            frame.drawPanel.repaint();
-        }
-    }
+                }
+                frame.drawPanel.moveit(MiddleGround.carData.getCarsList());
+                frame.drawPanel.repaint();
+            }
+        }}
 
     // Calls the gas method for each car once
     void gas(int amount) {
