@@ -155,7 +155,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Saab95 saab){
-                        saab.setTurboOn();
+                        saab.setTurboOff();
                     }
                 }
             }

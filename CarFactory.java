@@ -17,7 +17,6 @@ public class CarFactory {
                     BufferedImage volvoImage = ImageIO.read(Objects.requireNonNull(CarFactory.class.getResourceAsStream("/pics/Volvo240.jpg")));
                     Point volvoImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
-                    System.out.println(CRD);
                     MiddleGround.carData.add(volvoImage, volvoImagePoint, car);
                 } catch (IOException e) {
                     e.printStackTrace(); // Handle the exception appropriately

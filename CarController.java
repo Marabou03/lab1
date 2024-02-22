@@ -19,10 +19,12 @@ public class CarController {
 
     private static CarFactory carFactory;
     private static WorkShopFactory workShopFactory;
+    private static MiddleGround md;
 
     public CarController() {
         carFactory = new CarFactory();
         workShopFactory = new WorkShopFactory();
+        md = new MiddleGround();
         }
 
     private final int delay = 1;
@@ -39,11 +41,8 @@ public class CarController {
     //private Loading loader;
     //methods:
 
-
     public static void main(String[] args) {
 
-        MiddleGround.carData = new CarRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        MiddleGround.workShopData = new WorkShopRelatedData<>(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         // Instance of this class
         CarController cc = new CarController();
@@ -91,11 +90,13 @@ public class CarController {
                 double y = MiddleGround.workShopData.getWorkshopsList().get(0).getPoint().getY();
                 Point p = new Point((int) x, (int) y);
                 Point o = new Point((int) k.getPoint().getX(), (int) k.getPoint().getY());
-                if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
-                    MiddleGround.workShopData.getWorkshopsList().get(0).typeCarAllowed(v);
-                    frame.drawPanel.moveVolvoToWorkshop(0);
-                    MiddleGround.carData.getCarsList().remove(i);
-                    i--;
+                for (int j = 0; j < MiddleGround.workShopData.getWorkshopsList().size(); j++){
+                    if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
+                        MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(v);
+                        frame.drawPanel.moveVolvoToWorkshop(j);
+                        MiddleGround.carData.getCarsList().remove(i);
+                        i--;
+                    }
                 }
                 // switch för varje  combination av Car dess workShop
 
