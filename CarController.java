@@ -54,6 +54,7 @@ public class CarController {
         carFactory.createScania(MiddleGround.carData);
 
         workShopFactory.volvo240WorkShop(5, "hi", MiddleGround.workShopData);
+        workShopFactory.saab95WorkShop(5, "hi", MiddleGround.workShopData);
 
         for(int i = 0;i < MiddleGround.carData.getCarsList().size(); i++){
             MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*150, 0);
@@ -83,6 +84,12 @@ public class CarController {
             double posY = Math.pow(point1.getY() - point2.getY(), 2);
             return Math.sqrt(posX + posY);
         }
+
+        private void moveStuff(int i, int j, Car car){
+            MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(car);
+            frame.drawPanel.moveVolvoToWorkshop(j);
+            MiddleGround.carData.getCarsList().remove(i);
+        }
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < MiddleGround.carData.getCarsList().size(); i++) {
                 Car k = MiddleGround.carData.getCarsList().get(i);
@@ -92,9 +99,13 @@ public class CarController {
                 Point o = new Point((int) k.getPoint().getX(), (int) k.getPoint().getY());
                 for (int j = 0; j < MiddleGround.workShopData.getWorkshopsList().size(); j++){
                     if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
-                        MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(v);
-                        frame.drawPanel.moveVolvoToWorkshop(j);
-                        MiddleGround.carData.getCarsList().remove(i);
+                        moveStuff(i,j,v);
+                        i--;
+                    } else if (k instanceof Saab95 sa && calculateDistance(o, p) < 10) {
+                        moveStuff(i,j,sa);
+                        i--;
+                    } else if (k instanceof Scania sc && calculateDistance(o, p) < 10) {
+                        moveStuff(i,j,sc);
                         i--;
                     }
                 }

@@ -21,9 +21,20 @@ public class WorkShopFactory {
             e.printStackTrace();
         }
     }
-    /*protected Workshop<Saab95> saab95oWorkShop(int maxCars, String name){
-        return new Workshop<>(maxCars, name, Saab95.class);
+
+    protected void saab95WorkShop(int maxCars, String name, WorkShopRelatedData WRD){
+        try{
+            Workshop<Saab95> volvoWorkShop = new Workshop<>(maxCars, name, Saab95.class);
+            BufferedImage workShopImage = ImageIO.read(CarFactory.class.getResourceAsStream("/pics/SaabWorkShop.png"));
+            Point workShopImagePoint = new Point(0, 0);
+            // Add the created car to CarRelatedData
+            WRD.add(workShopImage, workShopImagePoint, volvoWorkShop);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
+    /*
     protected Workshop<Scania> scaniaWorkShop(int maxCars, String name){
         return new Workshop<>(maxCars, name, Scania.class);
     }

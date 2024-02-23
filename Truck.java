@@ -36,9 +36,6 @@ public class Truck extends Car {
     }
 
     protected void loadCar(Car car) {
-        //loader.loadCar(this, car);
-        /*System.out.println(this.carType);
-        System.out.println(car.carType);*/ // to see what happens when using loadcar
         boolean allowed = car.vehicleType.equals(this.vehicleType);
         if (!allowed){
             if(!rampUp && (loadedCars.size() < maxCars)){
