@@ -109,7 +109,7 @@ public class CarController {
                         i--;
                     }
                 }
-                // switch för varje  combination av Car dess workShop
+
 
                 k.move();
                 if (k.getPoint().getY() > frame.getHeight() - 300) {
