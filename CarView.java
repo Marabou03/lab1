@@ -195,23 +195,26 @@ public class CarView extends JFrame{
         addCar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania Scania){
-                        Scania.gas(gasAmount);
-                    }
-                }
+                // Call the addCar method with the desired car type
+                addCar("Volvo240"); // You can replace "Volvo240" with any desired car type
             }
         });
+
         removeCar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania Scania){
-                        Scania.gas(gasAmount);
-                    }
+                // Remove the last car from the list
+                if (!carC.getCarsList().isEmpty()) {
+                    carC.getCarsList().remove(carC.getCarsList().size() - 1);
+                    carC.getCarImages().remove(carC.getCarImages().size() - 1);
+                    carC.getCarImagesPoints().remove(carC.getCarImagesPoints().size() - 1);// lägg till i CarController
+
                 }
             }
         });
+;
+
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

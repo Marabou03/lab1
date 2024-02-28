@@ -183,7 +183,7 @@ public class CarController {
         }
     }
 
-    public void addCar(String carType) {
+    public void addCar2(String carType) {
         if (MiddleGround.carData.getCarsList().size() < 10) { // Check if there is space for a new car
             switch (carType.toLowerCase()) {
                 case "volvo240":
@@ -203,5 +203,4 @@ public class CarController {
             JOptionPane.showMessageDialog(frame, "Maximum number of cars reached. Cannot add more cars.");
         }
     }
-
 }
