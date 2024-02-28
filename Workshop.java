@@ -56,4 +56,7 @@ public class Workshop <T extends Car> {
         return new ArrayList<>(currentCars);
     }
 
+    public Class<T> getCarType() {
+        return carType;
+    }
 }

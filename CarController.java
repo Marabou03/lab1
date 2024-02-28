@@ -27,7 +27,7 @@ public class CarController {
         md = new MiddleGround();
         }
 
-    private final int delay = 1;
+    private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
@@ -93,21 +93,24 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < MiddleGround.carData.getCarsList().size(); i++) {
                 Car k = MiddleGround.carData.getCarsList().get(i);
-                double x = MiddleGround.workShopData.getWorkshopsList().get(0).getPoint().getX();
-                double y = MiddleGround.workShopData.getWorkshopsList().get(0).getPoint().getY();
-                Point p = new Point((int) x, (int) y);
                 Point o = new Point((int) k.getPoint().getX(), (int) k.getPoint().getY());
                 for (int j = 0; j < MiddleGround.workShopData.getWorkshopsList().size(); j++){
-                    if (k instanceof Volvo240 v && calculateDistance(o, p) < 10) {
+                    Workshop<Car> h = MiddleGround.workShopData.getWorkshopsList().get(j);
+                    double x = h.getPoint().getX();
+                    double y = h.getPoint().getY();
+                    Point p = new Point((int) x, (int) y);
+                    if (k instanceof Volvo240 v && h.getCarType().isInstance(v) && calculateDistance(o, p) < 10) {
                         moveStuff(i,j,v);
                         i--;
-                    } else if (k instanceof Saab95 sa && calculateDistance(o, p) < 10) {
+                    } else if (k instanceof Saab95 sa && h.getCarType().isInstance(sa)&& calculateDistance(o, p) < 10) {
                         moveStuff(i,j,sa);
                         i--;
-                    } else if (k instanceof Scania sc && calculateDistance(o, p) < 10) {
-                        moveStuff(i,j,sc);
+                    } else if (k instanceof Scania sc && h.getCarType().isInstance(sc) && calculateDistance(o, p) < 10) {
+                        moveStuff(i, j, sc);
                         i--;
+                        System.out.println("hi");
                     }
+
                 }
 
 
@@ -183,7 +186,7 @@ public class CarController {
         }
     }
 
-    public void addCar2(String carType) {
+    public void addCar(String carType) {
         if (MiddleGround.carData.getCarsList().size() < 10) { // Check if there is space for a new car
             switch (carType.toLowerCase()) {
                 case "volvo240":

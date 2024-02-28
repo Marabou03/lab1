@@ -1,20 +1,14 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-/**
- * This class represents the full view of the MVC pattern of your car simulator.
- * It initializes with being center on the screen and attaching it's controller in it's state.
- * It communicates with the Controller by calling methods of it when an action fires of in
- * each of its components.
- **/
-
 
 public class CarView extends JFrame{
     private static final int X = 800;
@@ -23,11 +17,9 @@ public class CarView extends JFrame{
     // The controller member
     CarRelatedData<BufferedImage, Point, Car> carC;
 
-
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
     JPanel controlPanel = new JPanel();
-
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
@@ -42,7 +34,9 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
-    JButton addCar = new JButton("Add Car");
+    JList<String> carList; // JList for car types
+    String[] carTypes = {"Volvo240", "Saab95", "Scania"}; // Available car types
+
     JButton removeCar = new JButton("Remove Car");
 
     // Constructor
@@ -52,16 +46,12 @@ public class CarView extends JFrame{
     }
 
     // Sets everything in place and fits everything
-
     private void initComponents(String title) {
-
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         this.add(drawPanel);
-
-
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -76,9 +66,8 @@ public class CarView extends JFrame{
         });
 
         gasPanel.setLayout(new BorderLayout());
-            gasPanel.add(gasLabel, BorderLayout.PAGE_START);
+        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
-
         this.add(gasPanel);
 
         controlPanel.setLayout(new GridLayout(2,4));
@@ -93,29 +82,28 @@ public class CarView extends JFrame{
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
-
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
         startButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(startButton);
-
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        addCar.setBackground(Color.red);
-        addCar.setForeground(Color.black);
-        addCar.setPreferredSize(new Dimension(X/5-15,100));
-        this.add(addCar);
+        // Create the JList with car types
+        carList = new JList<>(carTypes);
+        carList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        carList.setVisibleRowCount(3); // Set the number of visible rows
+        JScrollPane carListScrollPane = new JScrollPane(carList);
+        add(carListScrollPane);
 
         removeCar.setBackground(Color.red);
         removeCar.setForeground(Color.black);
         removeCar.setPreferredSize(new Dimension(X/5-15,100));
         this.add(removeCar);
 
-        // This actionListener is for the gas button only
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,7 +112,6 @@ public class CarView extends JFrame{
                 }
             }
         });
-
 
         brakeButton.addActionListener(new ActionListener() {
             @Override
@@ -152,6 +139,7 @@ public class CarView extends JFrame{
                 }
             }
         });
+
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,6 +150,7 @@ public class CarView extends JFrame{
                 }
             }
         });
+
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,6 +161,7 @@ public class CarView extends JFrame{
                 }
             }
         });
+
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,6 +172,7 @@ public class CarView extends JFrame{
                 }
             }
         });
+
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,40 +183,62 @@ public class CarView extends JFrame{
                 }
             }
         });
-        addCar.addActionListener(new ActionListener() {
+
+        // Add a ListSelectionListener to the JList
+        carList.addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Call the addCar method with the desired car type
-                addCar("Volvo240"); // You can replace "Volvo240" with any desired car type
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String selectedCarType = carList.getSelectedValue();
+                    if (selectedCarType != null) {
+                        addCar(selectedCarType);
+                    }
+                }
             }
         });
 
         removeCar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Remove the last car from the list
                 if (!carC.getCarsList().isEmpty()) {
                     carC.getCarsList().remove(carC.getCarsList().size() - 1);
                     carC.getCarImages().remove(carC.getCarImages().size() - 1);
-                    carC.getCarImagesPoints().remove(carC.getCarImagesPoints().size() - 1);// lägg till i CarController
-
+                    carC.getCarImagesPoints().remove(carC.getCarImagesPoints().size() - 1);
                 }
             }
         });
-;
 
-
-
-        // Make the frame pack all it's components by respecting the sizes if possible.
+        // Make the frame pack all its components by respecting the sizes if possible.
         this.pack();
 
-        // Get the computer screen resolution
+        // Center the frame on the screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Center the frame
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         // Make the frame visible
         this.setVisible(true);
+
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void addCar(String carType) {
+        if (carC.getCarsList().size() < 7) { // Check if there is space for a new car
+            switch (carType.toLowerCase()) {
+                case "volvo240":
+                    MiddleGround.carFactory.createCar("Volvo240", MiddleGround.carData);
+                    break;
+                case "saab95":
+                    MiddleGround.carFactory.createCar("Saab95", MiddleGround.carData);
+                    break;
+                case "scania":
+                    MiddleGround.carFactory.createScania(MiddleGround.carData);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid car type: " + carType);
+            }
+        } else {
+            JOptionPane.showMessageDialog(CarView.this, "Maximum number of cars reached. Cannot add more cars.");
+        }
     }
 }
