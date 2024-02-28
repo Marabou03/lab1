@@ -54,7 +54,7 @@ public class CarController {
         carFactory.createScania(MiddleGround.carData);
 
         workShopFactory.volvo240WorkShop(5, "hi", MiddleGround.workShopData);
-        workShopFactory.saab95WorkShop(5, "hi", MiddleGround.workShopData);
+        //workShopFactory.saab95WorkShop(5, "hi", MiddleGround.workShopData);
 
         for(int i = 0;i < MiddleGround.carData.getCarsList().size(); i++){
             MiddleGround.carData.getCarsList().get(i).getPoint().setLocation(i*150, 0);
@@ -79,7 +79,7 @@ public class CarController {
 
     private class TimerListener implements ActionListener {
 
-        protected double calculateDistance(Point point1, Point point2) {
+        private double calculateDistance(Point point1, Point point2) {
             double posX = Math.pow(point1.getX() - point2.getX(), 2);
             double posY = Math.pow(point1.getY() - point2.getY(), 2);
             return Math.sqrt(posX + posY);
@@ -182,4 +182,26 @@ public class CarController {
             }
         }
     }
+
+    public void addCar(String carType) {
+        if (MiddleGround.carData.getCarsList().size() < 10) { // Check if there is space for a new car
+            switch (carType.toLowerCase()) {
+                case "volvo240":
+                    carFactory.createCar("Volvo240", MiddleGround.carData);
+                    break;
+                case "saab95":
+                    carFactory.createCar("Saab95", MiddleGround.carData);
+                    break;
+                case "scania":
+                    carFactory.createScania(MiddleGround.carData);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid car type: " + carType);
+            }
+        } else {
+            // Inform the user that there is no space for more cars
+            JOptionPane.showMessageDialog(frame, "Maximum number of cars reached. Cannot add more cars.");
+        }
+    }
+
 }

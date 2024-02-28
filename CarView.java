@@ -42,6 +42,8 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    JButton addCar = new JButton("Add Car");
+    JButton removeCar = new JButton("Remove Car");
 
     // Constructor
     public CarView(String framename, CarRelatedData<BufferedImage, Point, Car> carC){
@@ -102,6 +104,16 @@ public class CarView extends JFrame{
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
+
+        addCar.setBackground(Color.red);
+        addCar.setForeground(Color.black);
+        addCar.setPreferredSize(new Dimension(X/5-15,100));
+        this.add(addCar);
+
+        removeCar.setBackground(Color.red);
+        removeCar.setForeground(Color.black);
+        removeCar.setPreferredSize(new Dimension(X/5-15,100));
+        this.add(removeCar);
 
         // This actionListener is for the gas button only
         gasButton.addActionListener(new ActionListener() {
@@ -176,6 +188,26 @@ public class CarView extends JFrame{
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Scania Scania){
                         Scania.lowerFlak(gasAmount);
+                    }
+                }
+            }
+        });
+        addCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Scania Scania){
+                        Scania.gas(gasAmount);
+                    }
+                }
+            }
+        });
+        removeCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCarsList()) {
+                    if(car instanceof Scania Scania){
+                        Scania.gas(gasAmount);
                     }
                 }
             }
