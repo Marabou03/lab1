@@ -1,0 +1,33 @@
+MVC
+Modell smart
+Viev dumb
+Controller thin
+
+Modell ska ha all logik i sig
+View ska bara måa viewn och inget mer
+Controller ska vara tunn och bara ha de metoder som behövs för att styra applikationen.
+
+I det första UML så hade view mycket logik i sig, dvs den var smartare än vad den skulle vara. Viewn ska generellt vara
+dumb vilket innebär att den inte ska ha svåra metoder som samlar data eller gör beräkningar utan viewn ska bara rita upp
+grafiken med hjälp av metoder ifrån modellen.
+
+Vi åtgärdade inte att viewn skulle exklusivt vara dumb så den hade metoder med logik som kan föras över till modellen.
+
+Controllern ska vara tunn vilket innebär i princip att den bara ska ha knappar som är kopplade till de metoder i modellen
+som knappen efterfrågar. refaktorisering ändrade inte mycket i controller.
+
+Vi använder inte observer pattern i att vi har ett observerinterface som hjälper till de olika klasserna att uppdatera
+den infon som de vill ha.
+Det kan uppdateras så att det är tydligare var och när de olika objekten uppdateras.
+ 
+Vi använder redan factorymethods för både bilar och för workshops vilket gör det smidigare för klienten att instansiera
+objekten.
+
+Vi använder inte state på det sättet att ett objekt agerar som en annan klass. Vi ha t.ex turbon i Saaben men det ändrar
+bara på hastigheten i objektet men objektet beter sig fortfarande som samma klass. Däremot så kan t.ex "staten" av programmet
+bete sig annorlunda beroende på t.ex ifall bilarna är igång eller inte. Ifall bilarana är igång eller inte så kan man
+använda de olika knapparna i kontroller för att röra på bilarna eller ej.
+
+Composite vilket i princip fungerar som ett binärt träd med hierarki används i att vi har arv från car till Saab, volvo,
+truck etc. Användning kan vara användbar för scalabilitet i fratmiden då det kan finna olika sorter av samma bil t.ex
+flera volvos där man itererar igenom för att ändra på vissa volvos states.
