@@ -87,7 +87,7 @@ public class CarController {
 
         private void moveStuff(int i, int j, Car car){
             MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(car);
-            frame.drawPanel.moveVolvoToWorkshop(j);
+            frame.drawPanel.moveVolvoToWorkshop(i);
             MiddleGround.carData.getCarsList().remove(i);
         }
         public void actionPerformed(ActionEvent e) {
@@ -102,13 +102,14 @@ public class CarController {
                     if (k instanceof Volvo240 v && h.getCarType().isInstance(v) && calculateDistance(o, p) < 10) {
                         moveStuff(i,j,v);
                         i--;
+                        System.out.println(MiddleGround.carData.getCarImages().toString());
                     } else if (k instanceof Saab95 sa && h.getCarType().isInstance(sa)&& calculateDistance(o, p) < 10) {
                         moveStuff(i,j,sa);
                         i--;
                     } else if (k instanceof Scania sc && h.getCarType().isInstance(sc) && calculateDistance(o, p) < 10) {
                         moveStuff(i, j, sc);
                         i--;
-                        System.out.println("hi");
+
                     }
 
                 }
@@ -127,8 +128,10 @@ public class CarController {
                 }
                 frame.drawPanel.moveit(MiddleGround.carData.getCarsList());
                 frame.drawPanel.repaint();
+
             }
         }}
+
 
     // Calls the gas method for each car once
     void gas(int amount) {

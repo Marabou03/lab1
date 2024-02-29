@@ -204,6 +204,7 @@ public class CarView extends JFrame{
                     carC.getCarsList().remove(carC.getCarsList().size() - 1);
                     carC.getCarImages().remove(carC.getCarImages().size() - 1);
                     carC.getCarImagesPoints().remove(carC.getCarImagesPoints().size() - 1);
+                    drawPanel.repaint();
                 }
             }
         });

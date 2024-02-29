@@ -31,4 +31,13 @@ public class CarRelatedData<T1 extends BufferedImage, T2 extends Point, T3 exten
         carImagesPoints.add(element2);
         carsList.add(element3);
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Car Image Names:\n");
+        for (T1 imageName : carImages) {
+            sb.append(imageName).append("\n");
+        }
+        return sb.toString();
+    }
 }
