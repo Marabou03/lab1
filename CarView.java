@@ -40,8 +40,10 @@ public class CarView extends JFrame{
     JButton removeCar = new JButton("Remove Car");
 
     // Constructor
+    CCMethotods ccm;
     public CarView(String framename, CarRelatedData<BufferedImage, Point, Car> carC){
         this.carC = carC;
+        this.ccm = new CCMethotods();
         initComponents(framename);
     }
 
@@ -108,7 +110,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    car.gas(gasAmount);
+                    ccm.gas(car, gasAmount);
                 }
             }
         });
@@ -117,7 +119,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    car.brake(gasAmount);
+                    ccm.brake(car, gasAmount);
                 }
             }
         });
@@ -126,7 +128,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    car.startEngine();
+                    ccm.startEngine(car);
                 }
             }
         });
@@ -135,7 +137,7 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    car.stopEngine();
+                    ccm.stopEngine(car);
                 }
             }
         });
@@ -145,7 +147,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Saab95 saab){
-                        saab.setTurboOn();
+                        ccm.setTurboOn(saab);
                     }
                 }
             }
@@ -156,7 +158,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Saab95 saab){
-                        saab.setTurboOff();
+                        ccm.setTurboOff(saab);
                     }
                 }
             }
@@ -166,8 +168,8 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania Scania){
-                        Scania.raiseFlak(gasAmount);
+                    if(car instanceof Scania scania){
+                        ccm.raiseFlak(scania, gasAmount);
                     }
                 }
             }
@@ -177,8 +179,8 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania Scania){
-                        Scania.lowerFlak(gasAmount);
+                    if(car instanceof Scania scania){
+                        ccm.lowerFlak(scania,gasAmount);
                     }
                 }
             }
@@ -191,7 +193,7 @@ public class CarView extends JFrame{
                 if (!e.getValueIsAdjusting()) {
                     String selectedCarType = carList.getSelectedValue();
                     if (selectedCarType != null) {
-                        addCar(selectedCarType);
+                        ccm.addCar(selectedCarType);
                     }
                 }
             }
@@ -221,25 +223,5 @@ public class CarView extends JFrame{
 
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    public void addCar(String carType) {
-        if (carC.getCarsList().size() < 7) { // Check if there is space for a new car
-            switch (carType.toLowerCase()) {
-                case "volvo240":
-                    MiddleGround.carFactory.createCar("Volvo240", MiddleGround.carData);
-                    break;
-                case "saab95":
-                    MiddleGround.carFactory.createCar("Saab95", MiddleGround.carData);
-                    break;
-                case "scania":
-                    MiddleGround.carFactory.createScania(MiddleGround.carData);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid car type: " + carType);
-            }
-        } else {
-            JOptionPane.showMessageDialog(CarView.this, "Maximum number of cars reached. Cannot add more cars.");
-        }
     }
 }
