@@ -12,38 +12,24 @@ CarView frame;
     }
     void brake(Car car,int amount) {
         double brake = ((double) amount) / 100;
-
-            car.brake(brake);
-
+        car.brake(brake);
     }
     void startEngine(Car car) {
-
-            car.startEngine();
-
+        car.startEngine();
     }
     void stopEngine(Car car) {
-
-            car.stopEngine();
-
+        car.stopEngine();
     }
     void setTurboOn(Saab95 saab) {
-
-                saab.setTurboOn(); // Set turbo on for Saab95
-
-
+        saab.setTurboOn(); // Set turbo on for Saab95
     }
 
     void setTurboOff(Saab95 saab) {
-
-                saab.setTurboOff(); // Set turbo off for Saab95
-
-
+        saab.setTurboOff(); // Set turbo off for Saab95
     }
     void raiseFlak(Scania scania, int amount) {
         double raise = ((double) amount) / 100;
-
-                scania.raiseFlak(raise);
-
+        scania.raiseFlak(raise);
     }
     void lowerFlak(Scania scania, int amount) {
         double lower = ((double) amount) / 100;

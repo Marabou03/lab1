@@ -57,8 +57,27 @@ public class CarController {
 
         private void moveStuff(int i, int j, Car car){
             MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(car);
-            frame.drawPanel.moveVolvoToWorkshop(i);
+            moveVolvoToWorkshop(i);
             MiddleGround.carData.getCarsList().remove(i);
+        }
+
+        // Method to move Volvo cars to the workshop
+        private void moveVolvoToWorkshop(int i) {
+            MiddleGround.carData.getCarImages().remove(i);
+            MiddleGround.carData.getCarImagesPoints().remove(i);
+
+
+        }
+
+        private void moveit(ArrayList<Car> cars) {
+            for(int i = 0; i < cars.size(); i++){
+                int p = (int) cars.get(i).getPoint().getX();
+                int q = (int) cars.get(i).getPoint().getY();
+                Point k = new Point(p,q);
+                MiddleGround.carData.getCarImagesPoints().set(i,k);
+
+            }
+            frame.drawPanel.repaint(); // Refresh the panel to reflect the changes
         }
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < MiddleGround.carData.getCarsList().size(); i++) {
@@ -96,7 +115,7 @@ public class CarController {
                 } else if (k.getPoint().getX() < 0) {
                     k.direction = Car.Direction.EAST;
                 }
-                frame.drawPanel.moveit(MiddleGround.carData.getCarsList());
+                moveit(MiddleGround.carData.getCarsList());
                 frame.drawPanel.repaint();
 
             }
