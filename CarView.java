@@ -9,8 +9,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements CarObserver{
+
+    private List<CarObserver> observers = new ArrayList<>();
+
+    // Add observer
+    public void addObserver(CarObserver observer) {
+        observers.add(observer);
+    }
+
+    // Remove observer
+    public void removeObserver(CarObserver observer) {
+        observers.remove(observer);
+    }
+
+    // Notify observers
+    private void notifyObservers(Car car) {
+        for (CarObserver observer : observers) {
+            observer.update(car);
+        }
+    }
+
+    // Implement update method from CarObserver interface
+    @Override
+    public void update(Car car) {
+        // Update view based on the changes in car
+        // For example, repaint the car position or update UI elements
+        drawPanel.repaint();
+    }
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -111,6 +139,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.gas(car, gasAmount);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -120,6 +149,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.brake(car, gasAmount);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -129,6 +159,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.startEngine(car);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -138,6 +169,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.stopEngine(car);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -148,6 +180,7 @@ public class CarView extends JFrame{
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Saab95 saab){
                         ccm.setTurboOn(saab);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -159,6 +192,7 @@ public class CarView extends JFrame{
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Saab95 saab){
                         ccm.setTurboOff(saab);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -170,6 +204,7 @@ public class CarView extends JFrame{
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Scania scania){
                         ccm.raiseFlak(scania, gasAmount);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -181,6 +216,7 @@ public class CarView extends JFrame{
                 for (Car car : carC.getCarsList()) {
                     if(car instanceof Scania scania){
                         ccm.lowerFlak(scania,gasAmount);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -194,6 +230,7 @@ public class CarView extends JFrame{
                     String selectedCarType = carList.getSelectedValue();
                     if (selectedCarType != null) {
                         ccm.addCar(selectedCarType);
+
                     }
                 }
             }
