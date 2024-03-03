@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 public class CarFactory {
-    public void createCar(String carType, CarRelatedData CRD) {
+    public void createCar(String carType, CarRelatedData<BufferedImage, Point, Car> CRD) {
         Car car;
         switch (carType.toLowerCase()) {
             case "volvo240":
@@ -17,7 +17,7 @@ public class CarFactory {
                     BufferedImage volvoImage = ImageIO.read(Objects.requireNonNull(CarFactory.class.getResourceAsStream("/pics/Volvo240.jpg")));
                     Point volvoImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
-                    MiddleGround.carData.add(volvoImage, volvoImagePoint, car);
+                    CRD.add(volvoImage, volvoImagePoint, car);
                 } catch (IOException e) {
                     e.printStackTrace(); // Handle the exception appropriately
                 }
@@ -28,7 +28,7 @@ public class CarFactory {
                     BufferedImage saabImage = ImageIO.read(Objects.requireNonNull(CarFactory.class.getResourceAsStream("/pics/Saab95.jpg")));
                     Point saabImagePoint = new Point(0, 0);
                     // Add the created car to CarRelatedData
-                    MiddleGround.carData.add(saabImage, saabImagePoint, car);
+                    CRD.add(saabImage, saabImagePoint, car);
                 } catch (IOException e) {
                     e.printStackTrace(); // Handle the exception appropriately
                 }
@@ -38,20 +38,13 @@ public class CarFactory {
         }
     }
 
-    /*public static Truck createTruck(int nrDoors, double enginePower, Color color, String name, int maxCars, String vehicleType) {
-        Truck truck = new Truck(nrDoors, enginePower, color, name, maxCars, vehicleType);
-        BufferedImage TruckImage = pics.;
-        carData.add(null, null, truck); // Add null for images and points
-        return truck;
-    }*/
-
     public void createScania(CarRelatedData<BufferedImage, Point, Car> CRD) {
         Scania scania = new Scania();
         try {
             BufferedImage truckImage = ImageIO.read(Objects.requireNonNull(CarFactory.class.getResourceAsStream("/pics/Scania.jpg")));
             Point truckImagePoint = new Point(0, 0);
             // Add the created car to CarRelatedData
-            MiddleGround.carData.add(truckImage, truckImagePoint, scania);
+            CRD.add(truckImage, truckImagePoint, scania);
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
