@@ -156,6 +156,7 @@ public class CarView extends JFrame implements CarObserver {
                 for (Car car : carC.getCarsList()) {
                     ccm.startEngine(car);
                     carC.notifyObservers(car);
+                    //System.out.println(car.getCurrentSpeed());
                 }
             }
         });
@@ -226,6 +227,7 @@ public class CarView extends JFrame implements CarObserver {
                     String selectedCarType = carList.getSelectedValue();
                     if (selectedCarType != null) {
                         ccm.addCar(selectedCarType);
+
                     }
                 }
             }

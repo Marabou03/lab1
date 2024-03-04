@@ -21,10 +21,10 @@ public class CarController {
     private WorkShopFactory workShopFactory;
     private MiddleGround md;
 
-    public CarController() {
+    public CarController(MiddleGround md) {
         carFactory = new CarFactory();
         workShopFactory = new WorkShopFactory();
-        md = new MiddleGround();
+        this.md = md;
         }
 
     private final int delay = 50;
