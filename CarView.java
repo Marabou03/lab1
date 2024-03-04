@@ -9,15 +9,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements CarObserver {
+    private List<CarObserver> observers = new ArrayList<>();
+    MiddleGround md;
+
+    // Add observer
+    public void addObserver(CarObserver observer) {
+        observers.add(observer);
+    }
+
+    // Remove observer
+    public void removeObserver(CarObserver observer) {
+        observers.remove(observer);
+    }
+
+    // Notify observers
+    private void notifyObservers(Car car) {
+        for (CarObserver observer : observers) {
+            observer.update(car);
+        }
+    }
+
     private static final int X = 800;
     private static final int Y = 800;
 
     // The controller member
     CarRelatedData<BufferedImage, Point, Car> carC;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
@@ -41,18 +62,21 @@ public class CarView extends JFrame{
 
     // Constructor
     CCMethotods ccm;
-    public CarView(String framename, CarRelatedData<BufferedImage, Point, Car> carC){
+
+    public CarView(String framename, CarRelatedData<BufferedImage, Point, Car> carC, MiddleGround md) {
         this.carC = carC;
-        this.ccm = new CCMethotods();
+        this.md = md;
+        this.ccm = new CCMethotods(md);
         initComponents(framename);
     }
 
     // Sets everything in place and fits everything
     private void initComponents(String title) {
         this.setTitle(title);
-        this.setPreferredSize(new Dimension(X,Y));
+        this.setPreferredSize(new Dimension(X, Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
+        drawPanel = new DrawPanel(X, Y - 240, md);
         this.add(drawPanel);
 
         SpinnerModel spinnerModel =
@@ -63,7 +87,7 @@ public class CarView extends JFrame{
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                gasAmount = (int) ((JSpinner) e.getSource()).getValue();
             }
         });
 
@@ -72,7 +96,7 @@ public class CarView extends JFrame{
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
         this.add(gasPanel);
 
-        controlPanel.setLayout(new GridLayout(2,4));
+        controlPanel.setLayout(new GridLayout(2, 4));
 
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
@@ -80,18 +104,18 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
-        controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
+        controlPanel.setPreferredSize(new Dimension((X / 2) + 4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(X/5-15,200));
+        startButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
         this.add(startButton);
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(X/5-15,200));
+        stopButton.setPreferredSize(new Dimension(X / 5 - 15, 200));
         this.add(stopButton);
 
         // Create the JList with car types
@@ -103,7 +127,7 @@ public class CarView extends JFrame{
 
         removeCar.setBackground(Color.red);
         removeCar.setForeground(Color.black);
-        removeCar.setPreferredSize(new Dimension(X/5-15,100));
+        removeCar.setPreferredSize(new Dimension(X / 5 - 15, 100));
         this.add(removeCar);
 
         gasButton.addActionListener(new ActionListener() {
@@ -111,6 +135,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.gas(car, gasAmount);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -120,6 +145,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.brake(car, gasAmount);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -129,6 +155,8 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.startEngine(car);
+                    carC.notifyObservers(car);
+                    //System.out.println(car.getCurrentSpeed());
                 }
             }
         });
@@ -138,6 +166,7 @@ public class CarView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
                     ccm.stopEngine(car);
+                    carC.notifyObservers(car);
                 }
             }
         });
@@ -146,8 +175,9 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Saab95 saab){
+                    if (car instanceof Saab95 saab) {
                         ccm.setTurboOn(saab);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -157,8 +187,9 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Saab95 saab){
+                    if (car instanceof Saab95 saab) {
                         ccm.setTurboOff(saab);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -168,8 +199,9 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania scania){
+                    if (car instanceof Scania scania) {
                         ccm.raiseFlak(scania, gasAmount);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -179,8 +211,9 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Car car : carC.getCarsList()) {
-                    if(car instanceof Scania scania){
-                        ccm.lowerFlak(scania,gasAmount);
+                    if (car instanceof Scania scania) {
+                        ccm.lowerFlak(scania, gasAmount);
+                        carC.notifyObservers(car);
                     }
                 }
             }
@@ -194,6 +227,7 @@ public class CarView extends JFrame{
                     String selectedCarType = carList.getSelectedValue();
                     if (selectedCarType != null) {
                         ccm.addCar(selectedCarType);
+
                     }
                 }
             }
@@ -216,7 +250,7 @@ public class CarView extends JFrame{
 
         // Center the frame on the screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
         // Make the frame visible
         this.setVisible(true);
@@ -224,4 +258,13 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    // Implement update method from CarObserver interface
+    @Override
+    public void update(Car car) {
+        // Update view based on the changes in car
+        // For example, repaint the car position or update UI elements
+        drawPanel.repaint();
+    }
 }
+

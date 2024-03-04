@@ -17,14 +17,14 @@ import java.util.ArrayList;
 
 public class CarController {
 
-    private static CarFactory carFactory;
-    private static WorkShopFactory workShopFactory;
-    private static MiddleGround md;
+    private CarFactory carFactory;
+    private WorkShopFactory workShopFactory;
+    private MiddleGround md;
 
-    public CarController() {
+    public CarController(MiddleGround md) {
         carFactory = new CarFactory();
         workShopFactory = new WorkShopFactory();
-        md = new MiddleGround();
+        this.md = md;
         }
 
     private final int delay = 50;
@@ -56,17 +56,15 @@ public class CarController {
         }
 
         private void moveStuff(int i, int j, Car car){
-            MiddleGround.workShopData.getWorkshopsList().get(j).typeCarAllowed(car);
+            md.workShopData.getWorkshopsList().get(j).typeCarAllowed(car);
             moveVolvoToWorkshop(i);
-            MiddleGround.carData.getCarsList().remove(i);
+            md.carData.getCarsList().remove(i);
         }
 
         // Method to move Volvo cars to the workshop
         private void moveVolvoToWorkshop(int i) {
-            MiddleGround.carData.getCarImages().remove(i);
-            MiddleGround.carData.getCarImagesPoints().remove(i);
-
-
+            md.carData.getCarImages().remove(i);
+            md.carData.getCarImagesPoints().remove(i);
         }
 
         private void moveit(ArrayList<Car> cars) {
@@ -74,35 +72,33 @@ public class CarController {
                 int p = (int) cars.get(i).getPoint().getX();
                 int q = (int) cars.get(i).getPoint().getY();
                 Point k = new Point(p,q);
-                MiddleGround.carData.getCarImagesPoints().set(i,k);
-
+                md.carData.getCarImagesPoints().set(i,k);
             }
             frame.drawPanel.repaint(); // Refresh the panel to reflect the changes
+
         }
+
         public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < MiddleGround.carData.getCarsList().size(); i++) {
-                Car k = MiddleGround.carData.getCarsList().get(i);
+            for (int i = 0; i < md.carData.getCarsList().size(); i++) {
+                Car k = md.carData.getCarsList().get(i);
                 Point o = new Point((int) k.getPoint().getX(), (int) k.getPoint().getY());
-                for (int j = 0; j < MiddleGround.workShopData.getWorkshopsList().size(); j++){
-                    Workshop<Car> h = MiddleGround.workShopData.getWorkshopsList().get(j);
+                for (int j = 0; j < md.workShopData.getWorkshopsList().size(); j++){
+                    Workshop<Car> h = md.workShopData.getWorkshopsList().get(j);
                     double x = h.getPoint().getX();
                     double y = h.getPoint().getY();
                     Point p = new Point((int) x, (int) y);
                     if (k instanceof Volvo240 v && h.getCarType().isInstance(v) && calculateDistance(o, p) < 10) {
                         moveStuff(i,j,v);
                         i--;
-                        System.out.println(MiddleGround.carData.getCarImages().toString());
+                        System.out.println(md.carData.getCarImages().toString());
                     } else if (k instanceof Saab95 sa && h.getCarType().isInstance(sa)&& calculateDistance(o, p) < 10) {
                         moveStuff(i,j,sa);
                         i--;
                     } else if (k instanceof Scania sc && h.getCarType().isInstance(sc) && calculateDistance(o, p) < 10) {
                         moveStuff(i, j, sc);
                         i--;
-
                     }
-
                 }
-
 
                 k.move();
                 if (k.getPoint().getY() > frame.getHeight() - 300) {
@@ -115,10 +111,10 @@ public class CarController {
                 } else if (k.getPoint().getX() < 0) {
                     k.direction = Car.Direction.EAST;
                 }
-                moveit(MiddleGround.carData.getCarsList());
+                moveit(md.carData.getCarsList());
                 frame.drawPanel.repaint();
-
             }
-        }}
+        }
+    }
 
 }
